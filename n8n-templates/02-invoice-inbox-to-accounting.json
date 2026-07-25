@@ -1,0 +1,204 @@
+{
+  "name": "02 - Invoice Inbox to Accounting",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [{ "mode": "everyMinute" }]
+        },
+        "downloadAttachments": true,
+        "format": "resolved",
+        "options": {
+          "customEmailConfig": "[\"UNSEEN\"]"
+        }
+      },
+      "id": "inbox",
+      "name": "Invoice Inbox",
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "position": [-660, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Turn each email into one item per attachment we can read.\n// Real deployments add a PDF text layer here (pdftotext, or OCR for scans) -\n// see demo/document-ai/README.md, 'Known limits'.\nconst out = [];\n\nfor (const item of $input.all()) {\n  const binary = item.binary || {};\n  for (const key of Object.keys(binary)) {\n    const file = binary[key];\n    const isText = /text\\/plain|\\.txt$/i.test(file.mimeType + file.fileName);\n    if (!isText) continue;\n\n    out.push({\n      json: {\n        filename: file.fileName,\n        from: item.json.from,\n        subject: item.json.subject,\n        text: Buffer.from(file.data, 'base64').toString('utf8')\n      }\n    });\n  }\n}\n\nreturn out;"
+      },
+      "id": "attachments",
+      "name": "Extract Attachments",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-440, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.DOCAI_URL || 'http://document-ai:3100' }}/api/extract",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ text: $json.text, filename: $json.filename }) }}",
+        "options": {
+          "timeout": 60000
+        }
+      },
+      "id": "extract",
+      "name": "Extract Fields",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-220, 300]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.routing }}",
+                    "rightValue": "post",
+                    "operator": { "type": "string", "operation": "equals" }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "post"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.routing }}",
+                    "rightValue": "review",
+                    "operator": { "type": "string", "operation": "equals" }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "review"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "reject"
+        }
+      },
+      "id": "route",
+      "name": "Post, Review or Reject",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [0, 300]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": { "__rl": true, "value": "={{ $env.ACCOUNTING_SHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "Invoices", "mode": "name" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Supplier": "={{ $json.fields.supplier_name }}",
+            "Invoice No": "={{ $json.fields.invoice_number }}",
+            "Date": "={{ $json.fields.invoice_date }}",
+            "Due": "={{ $json.fields.due_date }}",
+            "Currency": "={{ $json.fields.currency }}",
+            "Subtotal": "={{ $json.fields.subtotal }}",
+            "Tax": "={{ $json.fields.tax }}",
+            "Total": "={{ $json.fields.total }}",
+            "File": "={{ $json.filename }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "to-sheet",
+      "name": "Append to Accounting Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [260, 140]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": { "__rl": true, "value": "={{ $env.ACCOUNTING_SHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "Review Queue", "mode": "name" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "File": "={{ $json.filename }}",
+            "Supplier": "={{ $json.fields.supplier_name }}",
+            "Total": "={{ $json.fields.total }}",
+            "Confidence": "={{ $json.confidence }}",
+            "Problems": "={{ $json.issues.map(i => i.message).join('; ') }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "to-review",
+      "name": "Add to Review Queue",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [260, 320]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $env.BOOKKEEPER_TELEGRAM_CHAT_ID }}",
+        "text": "=Invoice needs a look: {{ $json.filename }}\n\nSupplier: {{ $json.fields.supplier_name }}\nTotal: {{ $json.fields.total }}\n\nWhy: {{ $json.issues.map(i => i.message).join('; ') }}",
+        "additionalFields": {}
+      },
+      "id": "notify-review",
+      "name": "Tell the Bookkeeper",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [500, 320]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Not a payable document (delivery note, statement, marketing email).\n// Logged so nothing disappears silently, but never posted to the accounts.\nconsole.log('skipped non-invoice:', $json.filename, $json.fields?.document_type);\nreturn $input.all();"
+      },
+      "id": "log-reject",
+      "name": "Log and Ignore",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [260, 500]
+    }
+  ],
+  "connections": {
+    "Invoice Inbox": {
+      "main": [[{ "node": "Extract Attachments", "type": "main", "index": 0 }]]
+    },
+    "Extract Attachments": {
+      "main": [[{ "node": "Extract Fields", "type": "main", "index": 0 }]]
+    },
+    "Extract Fields": {
+      "main": [[{ "node": "Post, Review or Reject", "type": "main", "index": 0 }]]
+    },
+    "Post, Review or Reject": {
+      "main": [
+        [{ "node": "Append to Accounting Sheet", "type": "main", "index": 0 }],
+        [{ "node": "Add to Review Queue", "type": "main", "index": 0 }],
+        [{ "node": "Log and Ignore", "type": "main", "index": 0 }]
+      ]
+    },
+    "Add to Review Queue": {
+      "main": [[{ "node": "Tell the Bookkeeper", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "description": "Supplier invoices arrive by email. Each one is read, checked (does subtotal + tax equal total, do the dates parse), and either appended to the accounting sheet or sent to a review queue with the reason attached. Delivery notes and statements are logged and ignored - they never reach the accounts."
+  }
+}

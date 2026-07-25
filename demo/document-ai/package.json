@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "node src/run.js",
-    "test": "node src/eval.js"
+    "test": "node src/eval.js",
+    "serve": "node src/server.js"
   }
 }

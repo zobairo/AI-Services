@@ -1,11 +1,12 @@
 # AI-Services — AI Automation Service Provider
 
-The complete plan for building an **AI automation company** — starting solo, from zero — **plus the working starter kit to run it**: a live chatbot demo, the sales site, client paperwork, outreach scripts, and a quoting tool.
+A complete plan for building an **AI automation company** from zero — **plus the working software and paperwork to run it**: two live service demos, per-client scaffolding, a deployable stack, n8n workflow templates, the sales site, and every client document you will need.
 
-**Read the plan → [docs/00-masterplan.md](docs/00-masterplan.md)** · **Run the demo → [demo/chatbot](demo/chatbot)**
+**Read the plan → [docs/00-masterplan.md](docs/00-masterplan.md)** · **Run it → below**
 
 ```bash
-cd demo/chatbot && npm run ingest && npm start   # working AI assistant, no API key needed
+npm test                                         # every check in the repo
+cd demo/chatbot && npm run ingest && npm start   # a working AI assistant, no API key needed
 cd demo/document-ai && npm start                 # invoices in, accounting data out
 node tools/quote.js --package E2                 # price a real deal
 ```
@@ -27,7 +28,7 @@ Small and mid-size businesses drown in repetitive communication and document wor
 | E — Industry packages (12) | Real-estate · clinic · e-commerce · restaurant · law firm · gym · hotel · dealership · accounting · education · trades · agency white-label | $1,500 – $8,000 setup + $300–900/mo |
 | F — Consulting, subscriptions & products (9) | Paid audits, training days, **AI-Employee plans ($390–990/mo)**, rescue projects, blueprints, course & community, affiliate income | $150 – $3,000/day · $50–500/product |
 
-Plus recurring: **retainers $100–800/mo**, subscription plans, usage margins on LLM tokens and voice minutes, 10–30% affiliate commissions.
+Plus recurring: **retainers $100–800/mo**, subscription plans, usage margins on tokens and voice minutes, 10–30% affiliate commissions.
 
 ## Headline targets
 
@@ -38,75 +39,88 @@ Plus recurring: **retainers $100–800/mo**, subscription plans, usage margins o
 | Month 24 | $150–250k year-2 revenue, $8–12k MRR, ≥55% recurring |
 | Month 36 | $300–450k year-3 revenue via the chosen Phase-5 path |
 
-Conservative and ambitious scenarios, unit economics, and the assumptions behind every number: [Financial Projections](docs/09-financial-projections.md).
+Conservative and ambitious scenarios, unit economics, and every assumption: [Financial Projections](docs/09-financial-projections.md).
 
-## The plan
+---
+
+# The plan
 
 | Doc | What's inside |
 |---|---|
 | [00 — Masterplan](docs/00-masterplan.md) | Vision, 8 revenue streams, 5 phases, operating principles |
 | [01 — Business Model & Pricing](docs/01-business-model-and-pricing.md) | Price lists, retainer tiers, subscriptions, all revenue streams, getting paid |
 | [02 — Services Catalog](docs/02-services-catalog.md) | The full menu: 52 services with prices + rollout order |
-| [03 — Tech Stack & Architecture](docs/03-tech-stack-and-architecture.md) | Claude + n8n + Supabase core, voice/commerce/content extensions, cost math, isolation & safety |
+| [03 — Tech Stack & Architecture](docs/03-tech-stack-and-architecture.md) | The stack, reference architecture, per-client cost math, isolation & safety |
 | [04 — Go-To-Market & Sales](docs/04-go-to-market.md) | Niches, demo-first selling, channels, pipeline math, first-3-clients playbook |
 | [05 — Operations, Legal & Clients](docs/05-operations-legal.md) | Contracts, data protection, onboarding, delivery, SLAs, failure modes |
 | [06 — 90-Day Roadmap (Phase 1)](docs/06-roadmap-90-days.md) | Week-by-week checklists to first revenue |
-| [07 — Scaling Roadmap (Phases 2–5)](docs/07-scaling-roadmap.md) | Months 4–36: full catalog, team, packages, products, the year-3 decision |
+| [07 — Scaling Roadmap (Phases 2–5)](docs/07-scaling-roadmap.md) | Months 4–36: team, packages, products, the year-3 decision |
 | [08 — Industry Packages](docs/08-industry-packages.md) | Twelve niche bundles with package pricing |
 | [09 — Financial Projections](docs/09-financial-projections.md) | 36-month scenarios, unit economics, sensitivities |
 
-## The starter kit — what's already built
+# The starter kit
 
-The plan's Days 1–14 deliverables, ready to use:
+Everything below is built, tested, and runs today. `npm test` checks all of it.
 
-| What | Where | Use it for |
+### Software
+
+| What | Where | Notes |
 |---|---|---|
-| **Demo #1 — AI chatbot** (service A1) | [`demo/chatbot/`](demo/chatbot) | Your flagship demo and the codebase for real client builds. Zero dependencies, acceptance-test suite, runs without an API key. |
-| **Demo #2 — document processing** (service C1) | [`demo/document-ai/`](demo/document-ai) | Invoices in, accounting data out, doubtful ones to a human. Field-accuracy eval included. |
-| **New-client scaffolding** | [`scripts/new-client.js`](scripts/new-client.js) | A new client is a folder, not a code change — the "build once, resell many times" asset. |
-| **Deployment stack** | [`deploy/`](deploy) | n8n + chatbot + automatic HTTPS on one VPS, with backup and security checklists. |
-| **Sales website** | [`site/index.html`](site/index.html) | Your one-page site. Edit the CONFIG block, deploy — no build step. |
-| **Quote calculator** | [`tools/quote.js`](tools/quote.js) | Price any service or package with margin and cost-of-goods math built in. |
-| **Proposal template** | [`templates/proposal.md`](templates/proposal.md) | Send within 24h of every call. |
-| **Service agreement** | [`templates/service-agreement.md`](templates/service-agreement.md) | Scope, IP, AI disclaimers, liability — review once with a local professional, reuse forever. |
-| **Kick-off checklist** | [`templates/kickoff-checklist.md`](templates/kickoff-checklist.md) | The 45-minute call that prevents most project failures. |
-| **Monthly report** | [`templates/monthly-report.md`](templates/monthly-report.md) | Your churn-prevention and upsell engine. |
-| **Case study** | [`templates/case-study.md`](templates/case-study.md) | What you trade your first low price for. |
-| **Outreach scripts** | [`sales/outreach-scripts.md`](sales/outreach-scripts.md) | Cold email, follow-ups, discovery call, objection handling. |
-| **Trackers** | [`trackers/`](trackers) | Weekly KPIs and the sales pipeline. |
+| **Demo #1 — AI chatbot** (service A1) | [`demo/chatbot/`](demo/chatbot) | RAG over the client's documents, confidence gate, source citations, 14 acceptance tests. Zero dependencies; runs without an API key. |
+| **Demo #2 — document processing** (service C1) | [`demo/document-ai/`](demo/document-ai) | Invoices → validated accounting data, human review queue, field-accuracy eval, HTTP API. |
+| **New-client scaffolding** | [`scripts/new-client.js`](scripts/new-client.js) | A client is a folder, not a code change. Six industry presets with their own guardrails. |
+| **n8n workflow templates** | [`n8n-templates/`](n8n-templates) | WhatsApp assistant · invoice inbox → accounting · speed-to-lead · uptime monitor. |
+| **Deployment stack** | [`deploy/`](deploy) | Docker Compose: Caddy (auto-HTTPS) + n8n + services, per-client isolation, backup & security checklists. |
+| **Quote calculator** | [`tools/quote.js`](tools/quote.js) | Prices any service or package with cost-of-goods and margin math. |
+
+### Selling
+
+| What | Where |
+|---|---|
+| **Sales website** | [`site/index.html`](site/index.html) — one page, self-contained, edit the CONFIG block and deploy |
+| **Outreach scripts** | [`sales/outreach-scripts.md`](sales/outreach-scripts.md) — cold email, follow-ups, discovery call, objection handling |
+| **Profile & demo videos** | [`sales/profile-and-portfolio.md`](sales/profile-and-portfolio.md) — Upwork copy and shot-by-shot demo scripts |
+
+### Client paperwork
+
+| What | Where |
+|---|---|
+| **Discovery questionnaire** | [`templates/discovery-questionnaire.md`](templates/discovery-questionnaire.md) — find the expensive process, qualify the buyer |
+| **Proposal** | [`templates/proposal.md`](templates/proposal.md) — one page, sent within 24h |
+| **Service agreement** | [`templates/service-agreement.md`](templates/service-agreement.md) — scope, IP, AI disclaimers, liability |
+| **Kick-off checklist** | [`templates/kickoff-checklist.md`](templates/kickoff-checklist.md) — the call that prevents most project failures |
+| **Monthly report** | [`templates/monthly-report.md`](templates/monthly-report.md) — churn prevention and upsell engine |
+| **Case study** | [`templates/case-study.md`](templates/case-study.md) — what you trade the first discount for |
+| **Trackers** | [`trackers/`](trackers) — weekly KPIs and sales pipeline |
+
+---
+
+## Your first week, concretely
 
 ```bash
-# Demo #1 — the chatbot (mock mode, no API key required)
-cd demo/chatbot
-npm run ingest && npm start          # http://localhost:3000
-npm test                             # 14 acceptance tests
-npm run ask -- "do you take Delta Dental?"
+# 1. See both demos working, then read the plan
+npm test
+cd demo/chatbot && npm run ingest && npm start
 
-# Demo #2 — document processing
-cd demo/document-ai
-npm start                            # extract, validate, route to review
-npm test                             # field-level accuracy
+# 2. Pick a niche — docs/04 has six with their painful process named
+#    Everything else depends on this decision.
 
-# Real answers from Claude in both demos
-export ANTHROPIC_API_KEY=sk-ant-...
+# 3. Build a demo on a real prospect's content (an hour's work)
+node scripts/new-client.js prospect-name "Their Business" --industry clinic
+#    fill clients/prospect-name/knowledge/ from their website, then:
+CLIENT_DIR=clients/prospect-name npm --prefix demo/chatbot run ingest
+CLIENT_DIR=clients/prospect-name npm --prefix demo/chatbot start
 
-# Onboard a client: one command, then fill in their content
-node scripts/new-client.js acme-dental "Acme Dental" --industry clinic
-CLIENT_DIR=clients/acme-dental npm --prefix demo/chatbot run ingest
-CLIENT_DIR=clients/acme-dental npm --prefix demo/chatbot test
-
-# Price a deal
-node tools/quote.js A1 --chats 3000
-node tools/quote.js --package E12
-node tools/quote.js --list
+# 4. Record it (sales/profile-and-portfolio.md has the shot list),
+#    send it to them, and start the daily outreach rhythm in docs/06.
 ```
 
-## How to use this repo
+Then work the [90-day roadmap](docs/06-roadmap-90-days.md) checklist by checklist. **Sell only the two lead services in Phase 1** — the full catalog switches on gradually via the [rollout order](docs/02-services-catalog.md).
 
-1. Read [00 — Masterplan](docs/00-masterplan.md), then pick your niche with [04 — Go-To-Market](docs/04-go-to-market.md) — every other decision depends on it.
-2. Run the [chatbot demo](demo/chatbot), then swap `knowledge/` for a real prospect's website content. That is your first demo asset, and the demo-first motion is what actually closes deals.
-3. Execute [06 — the 90-Day Roadmap](docs/06-roadmap-90-days.md) checklist by checklist. **Sell only the 2 lead services in Phase 1** — the big catalog switches on gradually via the [rollout order](docs/02-services-catalog.md).
-4. At each phase gate in [07 — Scaling Roadmap](docs/07-scaling-roadmap.md), check the numbers against [09 — Projections](docs/09-financial-projections.md) and move forward on data, not feelings.
-5. Update the docs and templates as reality teaches you — this is an operating manual, not a museum piece.
+## Honest limits
 
-> All prices and targets are planning estimates for SMB markets in 2026; adjust to your local market. The legal/ops content is practical guidance, not legal advice.
+- **The demos are reference builds, not products.** Retrieval is lexical (BM25), not embedding-based; document input is text, not PDFs. Both READMEs document exactly when to upgrade and to what.
+- **Deployment is untested on real hardware.** The compose stack is structurally validated but has not been booted on a live VPS — expect the usual first-deploy shakeout, and follow the security checklist before any client traffic.
+- **Sample data is fictional.** Northside Dental, the suppliers, all of it. Real prices and policies come from your client.
+- **The legal templates are a starting point, not legal advice.** One review by a professional in your country covers every future client.
+- **Prices and projections are planning estimates** for SMB markets in 2026. Adjust to your market, and update the docs as reality teaches you.

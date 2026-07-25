@@ -1,0 +1,123 @@
+{
+  "name": "04 - Uptime Monitor (know before the client does)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "minutes", "minutesInterval": 15 }]
+        }
+      },
+      "id": "schedule",
+      "name": "Every 15 Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-620, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// One row per client service you are paid to keep running.\n// Add a line here the day a client goes live - not the day it first breaks.\nreturn [\n  { json: { client: 'Demo Clinic', url: (process.env.CHATBOT_URL || 'http://chatbot:3000') + '/api/health' } },\n  { json: { client: 'Document AI', url: (process.env.DOCAI_URL || 'http://document-ai:3100') + '/api/health' } }\n];"
+      },
+      "id": "targets",
+      "name": "Services to Check",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-400, 300]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {
+          "timeout": 10000,
+          "response": {
+            "response": {
+              "neverError": true,
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "check",
+      "name": "Health Check",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-180, 300],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Mark each service up or down. neverError + continueRegularOutput above mean\n// a dead service arrives here as data rather than killing the whole run -\n// otherwise the first outage stops you checking the rest.\nconst out = [];\n\nfor (const [i, item] of $input.all().entries()) {\n  const target = $('Services to Check').all()[i]?.json || {};\n  const status = item.json.statusCode || 0;\n  const healthy = status >= 200 && status < 300 && item.json.body?.status === 'ok';\n\n  out.push({\n    json: {\n      client: target.client,\n      url: target.url,\n      healthy,\n      status,\n      detail: healthy ? 'ok' : (item.json.error?.message || `HTTP ${status || 'no response'}`),\n      checkedAt: new Date().toISOString()\n    }\n  });\n}\n\nreturn out;"
+      },
+      "id": "evaluate",
+      "name": "Up or Down",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [40, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "down",
+              "leftValue": "={{ $json.healthy }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "is-down",
+      "name": "Is It Down?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [260, 300]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $env.OWNER_TELEGRAM_CHAT_ID }}",
+        "text": "=SERVICE DOWN\n\nClient: {{ $json.client }}\nURL: {{ $json.url }}\nProblem: {{ $json.detail }}\nAt: {{ $json.checkedAt }}\n\nFix it before they notice.",
+        "additionalFields": {}
+      },
+      "id": "alert",
+      "name": "Alert Me",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [500, 220]
+    }
+  ],
+  "connections": {
+    "Every 15 Minutes": {
+      "main": [[{ "node": "Services to Check", "type": "main", "index": 0 }]]
+    },
+    "Services to Check": {
+      "main": [[{ "node": "Health Check", "type": "main", "index": 0 }]]
+    },
+    "Health Check": {
+      "main": [[{ "node": "Up or Down", "type": "main", "index": 0 }]]
+    },
+    "Up or Down": {
+      "main": [[{ "node": "Is It Down?", "type": "main", "index": 0 }]]
+    },
+    "Is It Down?": {
+      "main": [[{ "node": "Alert Me", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "description": "Checks every client service every 15 minutes and messages you the moment one stops answering. Knowing before the client does is most of what the monthly retainer actually buys."
+  }
+}

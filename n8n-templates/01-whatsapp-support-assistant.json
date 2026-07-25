@@ -1,0 +1,165 @@
+{
+  "name": "01 - WhatsApp Support Assistant",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whatsapp-inbound",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-inbound",
+      "name": "WhatsApp Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-620, 300],
+      "webhookId": "whatsapp-inbound"
+    },
+    {
+      "parameters": {
+        "jsCode": "// WhatsApp Cloud API delivers a nested payload. Pull out the one message\n// we care about and ignore everything else (status callbacks, reactions).\nconst body = $input.first().json.body || $input.first().json;\nconst change = body?.entry?.[0]?.changes?.[0]?.value;\nconst message = change?.messages?.[0];\n\nif (!message || message.type !== 'text') {\n  // Not a text message - stop this branch quietly.\n  return [];\n}\n\nreturn [{\n  json: {\n    from: message.from,\n    text: message.text.body,\n    messageId: message.id,\n    phoneNumberId: change.metadata.phone_number_id,\n    contactName: change.contacts?.[0]?.profile?.name || null\n  }\n}];"
+      },
+      "id": "parse-message",
+      "name": "Parse Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-400, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.CHATBOT_URL || 'http://chatbot:3000' }}/api/chat",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ message: $json.text }) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "ask-assistant",
+      "name": "Ask Assistant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-180, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "escalate-check",
+              "leftValue": "={{ $json.escalate }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "needs-human",
+      "name": "Needs a Human?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [40, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Parse Message').item.json.phoneNumberId }}/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "whatsAppApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ messaging_product: 'whatsapp', to: $('Parse Message').item.json.from, text: { body: $json.answer } }) }}",
+        "options": {}
+      },
+      "id": "send-handoff",
+      "name": "Send Handoff Reply",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [280, 180]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://graph.facebook.com/v21.0/{{ $('Parse Message').item.json.phoneNumberId }}/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "whatsAppApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ messaging_product: 'whatsapp', to: $('Parse Message').item.json.from, text: { body: $json.answer } }) }}",
+        "options": {}
+      },
+      "id": "send-answer",
+      "name": "Send Answer",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [280, 420]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $env.OWNER_TELEGRAM_CHAT_ID }}",
+        "text": "=A customer needs a human.\n\nFrom: {{ $('Parse Message').item.json.contactName || $('Parse Message').item.json.from }}\nAsked: {{ $('Parse Message').item.json.text }}\n\nReason: {{ $json.reason }}\nConfidence: {{ $json.confidence }}",
+        "additionalFields": {}
+      },
+      "id": "alert-owner",
+      "name": "Alert the Owner",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [500, 180]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "ok",
+        "options": {}
+      },
+      "id": "respond",
+      "name": "Acknowledge",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [500, 420]
+    }
+  ],
+  "connections": {
+    "WhatsApp Webhook": {
+      "main": [[{ "node": "Parse Message", "type": "main", "index": 0 }]]
+    },
+    "Parse Message": {
+      "main": [[{ "node": "Ask Assistant", "type": "main", "index": 0 }]]
+    },
+    "Ask Assistant": {
+      "main": [[{ "node": "Needs a Human?", "type": "main", "index": 0 }]]
+    },
+    "Needs a Human?": {
+      "main": [
+        [{ "node": "Send Handoff Reply", "type": "main", "index": 0 }],
+        [{ "node": "Send Answer", "type": "main", "index": 0 }]
+      ]
+    },
+    "Send Handoff Reply": {
+      "main": [[{ "node": "Alert the Owner", "type": "main", "index": 0 }]]
+    },
+    "Send Answer": {
+      "main": [[{ "node": "Acknowledge", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "description": "Customer messages the business on WhatsApp. The assistant answers from the client's own documents. When it is not confident, the customer gets a handoff message and the owner gets alerted with the full context - nobody is left guessing and no customer gets a made-up answer."
+  }
+}

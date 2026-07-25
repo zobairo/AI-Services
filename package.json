@@ -1,0 +1,19 @@
+{
+  "name": "ai-services",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Business plan and working starter kit for an AI automation service provider",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node scripts/test-all.js",
+    "chatbot": "npm --prefix demo/chatbot start",
+    "chatbot:test": "npm --prefix demo/chatbot test",
+    "docai": "npm --prefix demo/document-ai start",
+    "docai:test": "npm --prefix demo/document-ai test",
+    "quote": "node tools/quote.js",
+    "new-client": "node scripts/new-client.js"
+  }
+}

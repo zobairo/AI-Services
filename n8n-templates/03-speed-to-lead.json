@@ -1,0 +1,138 @@
+{
+  "name": "03 - Speed to Lead (reply in 60 seconds)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "new-lead",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "lead-webhook",
+      "name": "New Lead",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [-660, 300],
+      "webhookId": "new-lead"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Accept leads from a website form, a portal, or a Zapier-style forwarder.\n// Normalise the field names once here so the rest of the flow is stable.\nconst b = $input.first().json.body || $input.first().json;\n\nconst name = b.name || b.full_name || b.firstName || 'there';\nconst email = b.email || b.email_address || null;\nconst phone = b.phone || b.telephone || null;\nconst message = b.message || b.enquiry || b.comments || '';\nconst source = b.source || 'website form';\n\nif (!email && !phone) {\n  throw new Error('lead has no email and no phone - nothing to reply to');\n}\n\nreturn [{ json: { name, email, phone, message, source, receivedAt: new Date().toISOString() } }];"
+      },
+      "id": "normalise",
+      "name": "Normalise Lead",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-440, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "anthropicApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({\n  model: $env.ANTHROPIC_MODEL || 'claude-sonnet-5',\n  max_tokens: 400,\n  system: `You write the first reply to a new enquiry for ${$env.BUSINESS_NAME}. Rules: reply in 3-5 short sentences; answer their actual question if the business information below covers it, otherwise acknowledge it specifically and say a colleague will confirm; always invite them to book using the link; never invent prices, availability or promises; sign off as the ${$env.BUSINESS_NAME} team. Write plain text, no subject line, no markdown.\\n\\nBUSINESS INFORMATION:\\n${$env.BUSINESS_BLURB}\\n\\nBOOKING LINK: ${$env.BOOKING_LINK}`,\n  messages: [{ role: 'user', content: `New enquiry from ${$json.name} via ${$json.source}.\\n\\nTheir message: ${$json.message || '(no message provided)'}` }]\n}) }}",
+        "options": { "timeout": 30000 }
+      },
+      "id": "draft-reply",
+      "name": "Draft Personal Reply",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-220, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const reply = $json.content?.filter(b => b.type === 'text').map(b => b.text).join('').trim();\nconst lead = $('Normalise Lead').first().json;\n\nif (!reply) {\n  throw new Error('no reply text returned - not sending an empty email');\n}\n\nreturn [{ json: { ...lead, reply } }];"
+      },
+      "id": "unpack",
+      "name": "Unpack Reply",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [0, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "={{ $env.FROM_EMAIL }}",
+        "toEmail": "={{ $json.email }}",
+        "subject": "=Thanks for getting in touch",
+        "emailFormat": "text",
+        "text": "={{ $json.reply }}",
+        "options": {}
+      },
+      "id": "send-email",
+      "name": "Send Reply",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [220, 220]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": { "__rl": true, "value": "={{ $env.LEADS_SHEET_ID }}", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "Leads", "mode": "name" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Received": "={{ $json.receivedAt }}",
+            "Name": "={{ $json.name }}",
+            "Email": "={{ $json.email }}",
+            "Phone": "={{ $json.phone }}",
+            "Source": "={{ $json.source }}",
+            "Their message": "={{ $json.message }}",
+            "Auto-reply sent": "={{ $json.reply }}",
+            "Status": "replied - awaiting human follow-up"
+          }
+        },
+        "options": {}
+      },
+      "id": "log-lead",
+      "name": "Log to CRM Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [220, 400]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $env.OWNER_TELEGRAM_CHAT_ID }}",
+        "text": "=New lead replied to in under a minute.\n\n{{ $json.name }} ({{ $json.email || $json.phone }}) via {{ $json.source }}\n\nThey said: {{ $json.message }}\n\nFollow up personally today.",
+        "additionalFields": {}
+      },
+      "id": "notify",
+      "name": "Nudge the Owner",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [460, 400]
+    }
+  ],
+  "connections": {
+    "New Lead": {
+      "main": [[{ "node": "Normalise Lead", "type": "main", "index": 0 }]]
+    },
+    "Normalise Lead": {
+      "main": [[{ "node": "Draft Personal Reply", "type": "main", "index": 0 }]]
+    },
+    "Draft Personal Reply": {
+      "main": [[{ "node": "Unpack Reply", "type": "main", "index": 0 }]]
+    },
+    "Unpack Reply": {
+      "main": [
+        [
+          { "node": "Send Reply", "type": "main", "index": 0 },
+          { "node": "Log to CRM Sheet", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Log to CRM Sheet": {
+      "main": [[{ "node": "Nudge the Owner", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "description": "A new enquiry gets a personal, specific reply within a minute, at any hour, plus a booking link - then lands in the CRM sheet and pings the owner to follow up personally. Service B3. The reply answers what it can from the business blurb and never invents prices or availability."
+  }
+}
