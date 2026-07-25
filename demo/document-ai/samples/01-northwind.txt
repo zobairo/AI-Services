@@ -1,0 +1,28 @@
+NORTHWIND SUPPLIES LTD
+42 Dock Street, Riverside, RS2 8QT
+VAT Reg: GB 442 8871 03
+
+INVOICE
+
+Invoice No:     NW-2026-04417
+Invoice Date:   14 March 2026
+Due Date:       13 April 2026
+
+Bill To:
+Harbour Cafe Group
+118 Harbour Road
+Northside
+
+Description                          Qty      Unit      Amount
+------------------------------------------------------------
+Arabica coffee beans, 1kg             24     18.50      444.00
+Oat milk, 1L cartons                  60      1.85      111.00
+Paper cups, 12oz (sleeve of 50)       15      6.40       96.00
+Delivery                               1     12.00       12.00
+------------------------------------------------------------
+                                        Subtotal       663.00
+                                        VAT @ 20%      132.60
+                                        TOTAL GBP      795.60
+
+Payment terms: 30 days net
+Bank: Riverside Commercial, Sort 20-45-11, Acct 88401277

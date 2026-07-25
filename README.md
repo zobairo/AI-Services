@@ -6,6 +6,7 @@ The complete plan for building an **AI automation company** — starting solo, f
 
 ```bash
 cd demo/chatbot && npm run ingest && npm start   # working AI assistant, no API key needed
+cd demo/document-ai && npm start                 # invoices in, accounting data out
 node tools/quote.js --package E2                 # price a real deal
 ```
 
@@ -60,25 +61,39 @@ The plan's Days 1–14 deliverables, ready to use:
 
 | What | Where | Use it for |
 |---|---|---|
-| **Working AI chatbot** (service A1) | [`demo/chatbot/`](demo/chatbot) | Your demo #1 and the codebase for real client builds. Runs with zero dependencies; no API key needed for mock mode. Includes an acceptance-test suite. |
-| **Sales website** | [`site/index.html`](site/index.html) | Your one-page site. Edit the CONFIG block at the bottom, then deploy — no build step. |
+| **Demo #1 — AI chatbot** (service A1) | [`demo/chatbot/`](demo/chatbot) | Your flagship demo and the codebase for real client builds. Zero dependencies, acceptance-test suite, runs without an API key. |
+| **Demo #2 — document processing** (service C1) | [`demo/document-ai/`](demo/document-ai) | Invoices in, accounting data out, doubtful ones to a human. Field-accuracy eval included. |
+| **New-client scaffolding** | [`scripts/new-client.js`](scripts/new-client.js) | A new client is a folder, not a code change — the "build once, resell many times" asset. |
+| **Deployment stack** | [`deploy/`](deploy) | n8n + chatbot + automatic HTTPS on one VPS, with backup and security checklists. |
+| **Sales website** | [`site/index.html`](site/index.html) | Your one-page site. Edit the CONFIG block, deploy — no build step. |
 | **Quote calculator** | [`tools/quote.js`](tools/quote.js) | Price any service or package with margin and cost-of-goods math built in. |
 | **Proposal template** | [`templates/proposal.md`](templates/proposal.md) | Send within 24h of every call. |
 | **Service agreement** | [`templates/service-agreement.md`](templates/service-agreement.md) | Scope, IP, AI disclaimers, liability — review once with a local professional, reuse forever. |
 | **Kick-off checklist** | [`templates/kickoff-checklist.md`](templates/kickoff-checklist.md) | The 45-minute call that prevents most project failures. |
 | **Monthly report** | [`templates/monthly-report.md`](templates/monthly-report.md) | Your churn-prevention and upsell engine. |
+| **Case study** | [`templates/case-study.md`](templates/case-study.md) | What you trade your first low price for. |
 | **Outreach scripts** | [`sales/outreach-scripts.md`](sales/outreach-scripts.md) | Cold email, follow-ups, discovery call, objection handling. |
 | **Trackers** | [`trackers/`](trackers) | Weekly KPIs and the sales pipeline. |
 
 ```bash
-# See the demo working (mock mode — no API key required)
+# Demo #1 — the chatbot (mock mode, no API key required)
 cd demo/chatbot
 npm run ingest && npm start          # http://localhost:3000
-npm test                             # acceptance tests
+npm test                             # 14 acceptance tests
 npm run ask -- "do you take Delta Dental?"
 
-# Real answers from Claude
+# Demo #2 — document processing
+cd demo/document-ai
+npm start                            # extract, validate, route to review
+npm test                             # field-level accuracy
+
+# Real answers from Claude in both demos
 export ANTHROPIC_API_KEY=sk-ant-...
+
+# Onboard a client: one command, then fill in their content
+node scripts/new-client.js acme-dental "Acme Dental" --industry clinic
+CLIENT_DIR=clients/acme-dental npm --prefix demo/chatbot run ingest
+CLIENT_DIR=clients/acme-dental npm --prefix demo/chatbot test
 
 # Price a deal
 node tools/quote.js A1 --chats 3000

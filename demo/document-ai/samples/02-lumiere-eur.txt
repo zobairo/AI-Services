@@ -1,0 +1,24 @@
+Lumière Éclairage SARL
+17 rue des Artisans, 69003 Lyon, France
+TVA: FR 62 843 221 907
+
+FACTURE / INVOICE                          N° 2026-0338
+
+Date d'émission / Issue date:  02/03/2026
+Échéance / Due:                01/05/2026
+
+Client:
+Harbour Cafe Group
+118 Harbour Road, Northside
+
+  Réf      Désignation                     Qté    PU HT      Total HT
+  LED-40   Ampoules LED 4000K               40     6,20        248,00
+  RAIL-2   Rail de spots 2m                  6    54,00        324,00
+  INST     Installation (forfait)            1   180,00        180,00
+
+                                     Total HT           752,00
+                                     TVA 20%            150,40
+                                     TOTAL TTC EUR      902,40
+
+Conditions: paiement à 60 jours.
+IBAN FR76 3000 4008 2800 0123 4567 890

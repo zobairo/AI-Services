@@ -7,22 +7,45 @@
 //  - every answer carries its sources, so a client can audit any reply
 
 import { readFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import path from 'node:path';
 import { buildIndex, search } from './retrieve.js';
-import { ingest, CHUNKS_FILE } from './ingest.js';
+import { ingest, CHUNKS_FILE, CLIENT_DIR } from './ingest.js';
+
+// Per-client settings live in <client>/client.json. Environment variables
+// override the file, and the demo defaults fill any remaining gaps — so a new
+// client is a folder, not a code change.
+function loadClientConfig() {
+  const file = path.join(CLIENT_DIR, 'client.json');
+  if (!existsSync(file)) return {};
+  try {
+    return JSON.parse(readFileSync(file, 'utf8'));
+  } catch (error) {
+    console.warn(`warning: could not read ${file}: ${error.message}`);
+    return {};
+  }
+}
+
+const client = loadClientConfig();
 
 export const CONFIG = {
-  model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-5',
+  model: process.env.ANTHROPIC_MODEL || client.model || 'claude-sonnet-5',
   apiKey: process.env.ANTHROPIC_API_KEY || '',
   maxTokens: 400,
   topK: 4,
   // Below this share of query terms found in the knowledge base, we do not
   // call the model at all — we escalate. Cheap, deterministic, explainable.
-  confidenceFloor: 0.34,
-  businessName: process.env.BUSINESS_NAME || 'Northside Dental Clinic',
+  confidenceFloor: Number(client.confidenceFloor ?? 0.34),
+  businessName: process.env.BUSINESS_NAME || client.businessName || 'Northside Dental Clinic',
   handoffMessage:
     process.env.HANDOFF_MESSAGE ||
+    client.handoffMessage ||
     'I do not want to guess on this one. I am passing you to a team member who will reply here shortly — or you can call us on +1 555 0134 during opening hours.',
+  // Industry-specific "never answer this" rules, added to the system prompt.
+  guardrails: client.guardrails || [
+    'Never give medical, dental, legal, or financial advice, or anything that could be read as a diagnosis or treatment recommendation — even if the context mentions a treatment. You may state facts from the context (prices, durations, what a service includes) and then offer to book a consultation. Any question about symptoms, pain, medication, or what treatment someone needs must set "escalate" to true.',
+  ],
+  tone: client.tone || 'Be brief and warm: 1-3 short sentences, the tone of a helpful receptionist.',
 };
 
 let cachedIndex = null;
@@ -41,15 +64,20 @@ export async function getIndex({ reload = false } = {}) {
 }
 
 function systemPrompt() {
+  const guardrails = CONFIG.guardrails
+    .map((rule, i) => `${i + 3}. ${rule}`)
+    .join('\n');
+  const next = CONFIG.guardrails.length + 3;
+
   return `You are the customer assistant for ${CONFIG.businessName}. You answer on the website and on WhatsApp.
 
 RULES — follow all of them, always:
 1. Answer ONLY using the CONTEXT provided in the user message. The context is the business's own documents.
 2. If the context does not contain the answer, do not guess and do not use general knowledge. Set "escalate" to true instead.
-3. Never give medical, dental, legal, or financial advice, or anything that could be read as a diagnosis or treatment recommendation — even if the context mentions a treatment. You may state facts from the context (prices, durations, what a service includes) and then offer to book a consultation. Any question about symptoms, pain, medication, or what treatment someone needs must set "escalate" to true.
-4. Be brief and warm: 1-3 short sentences, the tone of a helpful receptionist. No bullet lists unless listing prices or opening hours.
-5. Never invent prices, phone numbers, dates, or availability.
-6. Reply in the same language the customer wrote in.
+${guardrails}
+${next}. ${CONFIG.tone} No bullet lists unless listing prices or opening hours.
+${next + 1}. Never invent prices, phone numbers, dates, or availability.
+${next + 2}. Reply in the same language the customer wrote in.
 
 Respond with ONLY a JSON object, no markdown fence, in this exact shape:
 {"answer": "<your reply to the customer>", "escalate": <true|false>, "reason": "<short internal note on why you escalated, or empty>"}`;

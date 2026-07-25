@@ -1,0 +1,14 @@
+{
+  "name": "ai-services-document-ai-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Service C1 reference build: document extraction with validation-based confidence, human review queue and accounting export. Zero dependencies.",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/run.js",
+    "test": "node src/eval.js"
+  }
+}

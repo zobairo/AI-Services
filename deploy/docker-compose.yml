@@ -1,0 +1,72 @@
+# Production stack for a solo AI automation provider.
+# One VPS (2 vCPU / 4 GB is enough to start), Docker, done.
+# See deploy/README.md for the full walkthrough, and docs/03 for why this stack.
+
+services:
+  # Reverse proxy with automatic HTTPS. Caddy gets certificates itself —
+  # no certbot cron, no expired-certificate incidents at 2am.
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - n8n
+      - chatbot
+
+  # The orchestration workhorse. Workflows export as JSON — that export is
+  # what goes into your template library after every delivery.
+  n8n:
+    image: n8nio/n8n:latest
+    restart: unless-stopped
+    environment:
+      - N8N_HOST=${N8N_HOST:?set N8N_HOST in .env}
+      - N8N_PROTOCOL=https
+      - WEBHOOK_URL=https://${N8N_HOST}/
+      - N8N_PORT=5678
+      - GENERIC_TIMEZONE=${TIMEZONE:-Europe/London}
+      # Encrypts stored credentials. Losing this key means re-entering every
+      # client credential by hand — back it up somewhere you will still have
+      # in a year.
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY:?set N8N_ENCRYPTION_KEY in .env}
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER:?set N8N_USER in .env}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD:?set N8N_PASSWORD in .env}
+      - N8N_DIAGNOSTICS_ENABLED=false
+      - EXECUTIONS_DATA_PRUNE=true
+      - EXECUTIONS_DATA_MAX_AGE=336  # keep 14 days of run history
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./shared:/data/shared  # drop files here to pass them between host and workflows
+    expose:
+      - "5678"
+
+  # The chatbot service. CLIENT_DIR selects which client this instance serves;
+  # run one container per client (see docs/03 on isolation) by copying this
+  # block with a different CLIENT_DIR, container name and Caddy hostname.
+  chatbot:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.chatbot
+    restart: unless-stopped
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:?set ANTHROPIC_API_KEY in .env}
+      - ANTHROPIC_MODEL=${ANTHROPIC_MODEL:-claude-sonnet-5}
+      - CLIENT_DIR=${CLIENT_DIR:-/app/demo/chatbot}
+      - PORT=3000
+    volumes:
+      # Client content lives on the host so you can update a knowledge base
+      # without rebuilding the image.
+      - ../clients:/app/clients:ro
+    expose:
+      - "3000"
+
+volumes:
+  n8n_data:
+  caddy_data:
+  caddy_config:

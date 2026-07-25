@@ -8,8 +8,28 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-export const KNOWLEDGE_DIR = path.join(here, '..', 'knowledge');
-export const CHUNKS_FILE = path.join(here, '..', 'data', 'chunks.json');
+
+// One codebase, many clients. Point CLIENT_DIR at a folder created by
+// `node scripts/new-client.js` and everything — knowledge, config, test cases —
+// comes from there. Unset, it runs the built-in demo clinic.
+//
+// A relative CLIENT_DIR is resolved against the current directory first and the
+// repository root second, so `CLIENT_DIR=clients/acme` works both from the repo
+// root and from inside demo/chatbot (npm --prefix changes the working directory).
+function resolveClientDir(value) {
+  if (!value) return path.join(here, '..');
+  if (path.isAbsolute(value)) return value;
+  const fromCwd = path.resolve(value);
+  if (existsSync(fromCwd)) return fromCwd;
+  const fromRepoRoot = path.resolve(here, '..', '..', '..', value);
+  if (existsSync(fromRepoRoot)) return fromRepoRoot;
+  return fromCwd; // report the intuitive path in the error
+}
+
+export const CLIENT_DIR = resolveClientDir(process.env.CLIENT_DIR);
+
+export const KNOWLEDGE_DIR = path.join(CLIENT_DIR, 'knowledge');
+export const CHUNKS_FILE = path.join(CLIENT_DIR, 'data', 'chunks.json');
 
 function splitIntoSections(markdown, source) {
   const lines = markdown.split('\n');

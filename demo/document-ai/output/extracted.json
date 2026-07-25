@@ -1,0 +1,110 @@
+{
+  "posted": [
+    {
+      "file": "01-northwind.txt",
+      "document_type": "invoice",
+      "supplier_name": "NORTHWIND SUPPLIES LTD",
+      "invoice_number": "Invoice",
+      "invoice_date": "2026-03-14",
+      "due_date": "2026-04-13",
+      "currency": "GBP",
+      "subtotal": 663,
+      "tax": 132.6,
+      "total": 795.6,
+      "confidence": 1
+    },
+    {
+      "file": "02-lumiere-eur.txt",
+      "document_type": "invoice",
+      "supplier_name": "Lumière Éclairage SARL",
+      "invoice_number": "2026-0338",
+      "invoice_date": "2026-03-02",
+      "due_date": "2026-05-01",
+      "currency": "EUR",
+      "subtotal": 752,
+      "tax": 150.4,
+      "total": 902.4,
+      "confidence": 1
+    },
+    {
+      "file": "03-quickmart-receipt.txt",
+      "document_type": "receipt",
+      "supplier_name": "QUICKMART TRADE",
+      "invoice_number": "88213-004",
+      "invoice_date": "2026-03-21",
+      "due_date": null,
+      "currency": "GBP",
+      "subtotal": 83.6,
+      "tax": 16.72,
+      "total": 100.32,
+      "confidence": 1
+    },
+    {
+      "file": "04-brightwave-discount.txt",
+      "document_type": "invoice",
+      "supplier_name": "BRIGHTWAVE MARKETING",
+      "invoice_number": "Invoice",
+      "invoice_date": "2026-02-28",
+      "due_date": "2026-03-14",
+      "currency": "GBP",
+      "subtotal": 1480.5,
+      "tax": 296.1,
+      "total": 1776.6,
+      "confidence": 1
+    }
+  ],
+  "review": [
+    {
+      "file": "05-messy-scan.txt",
+      "document_type": "invoice",
+      "supplier_name": "FRESH F1ELDS PRODUCE",
+      "invoice_number": null,
+      "invoice_date": null,
+      "due_date": null,
+      "currency": "GBP",
+      "subtotal": null,
+      "tax": 0,
+      "total": null,
+      "confidence": 0,
+      "issues": [
+        {
+          "field": "invoice_number",
+          "severity": "high",
+          "message": "Invoice no. is missing"
+        },
+        {
+          "field": "invoice_date",
+          "severity": "high",
+          "message": "Date is missing"
+        },
+        {
+          "field": "subtotal",
+          "severity": "high",
+          "message": "Subtotal is missing"
+        },
+        {
+          "field": "total",
+          "severity": "high",
+          "message": "Total is missing"
+        }
+      ]
+    }
+  ],
+  "rejected": [
+    {
+      "file": "06-delivery-note.txt",
+      "reason": "not an invoice or receipt",
+      "fields": {
+        "document_type": "other",
+        "supplier_name": "NORTHWIND SUPPLIES LTD",
+        "invoice_number": "Goods",
+        "invoice_date": "2026-03-15",
+        "due_date": null,
+        "currency": "GBP",
+        "subtotal": null,
+        "tax": null,
+        "total": null
+      }
+    }
+  ]
+}

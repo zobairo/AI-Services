@@ -1,0 +1,5 @@
+file,document_type,supplier_name,invoice_number,invoice_date,due_date,currency,subtotal,tax,total,confidence
+01-northwind.txt,invoice,NORTHWIND SUPPLIES LTD,Invoice,2026-03-14,2026-04-13,GBP,663,132.6,795.6,1
+02-lumiere-eur.txt,invoice,Lumière Éclairage SARL,2026-0338,2026-03-02,2026-05-01,EUR,752,150.4,902.4,1
+03-quickmart-receipt.txt,receipt,QUICKMART TRADE,88213-004,2026-03-21,,GBP,83.6,16.72,100.32,1
+04-brightwave-discount.txt,invoice,BRIGHTWAVE MARKETING,Invoice,2026-02-28,2026-03-14,GBP,1480.5,296.1,1776.6,1

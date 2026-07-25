@@ -1,0 +1,59 @@
+{
+  "_comment": "Ground truth for the sample documents. On a real client project you build this from 20-30 of their own documents during the kick-off call, and it becomes the acceptance criteria in the proposal.",
+  "documents": {
+    "01-northwind.txt": {
+      "document_type": "invoice",
+      "invoice_number": "NW-2026-04417",
+      "invoice_date": "2026-03-14",
+      "due_date": "2026-04-13",
+      "currency": "GBP",
+      "subtotal": 663.0,
+      "tax": 132.6,
+      "total": 795.6
+    },
+    "02-lumiere-eur.txt": {
+      "document_type": "invoice",
+      "invoice_number": "2026-0338",
+      "invoice_date": "2026-03-02",
+      "due_date": "2026-05-01",
+      "currency": "EUR",
+      "subtotal": 752.0,
+      "tax": 150.4,
+      "total": 902.4
+    },
+    "03-quickmart-receipt.txt": {
+      "document_type": "receipt",
+      "invoice_number": "88213-004",
+      "invoice_date": "2026-03-21",
+      "currency": "GBP",
+      "subtotal": 83.6,
+      "tax": 16.72,
+      "total": 100.32
+    },
+    "04-brightwave-discount.txt": {
+      "_note": "subtotal is the discounted net (1480.50), not the gross 1645.00 — the value that reconciles with tax and total",
+      "document_type": "invoice",
+      "invoice_number": "BW/1042",
+      "invoice_date": "2026-02-28",
+      "due_date": "2026-03-14",
+      "currency": "GBP",
+      "subtotal": 1480.5,
+      "tax": 296.1,
+      "total": 1776.6
+    },
+    "05-messy-scan.txt": {
+      "_note": "deliberately OCR-damaged; rule-based extraction fails here, which is the point",
+      "document_type": "invoice",
+      "invoice_date": "2026-03-09",
+      "currency": "GBP",
+      "subtotal": 121.0,
+      "tax": 0.0,
+      "total": 121.0
+    },
+    "06-delivery-note.txt": {
+      "_note": "guardrail: a delivery note lists a supplier and goods but must never reach the accounts",
+      "must_reject": true,
+      "document_type": "other"
+    }
+  }
+}

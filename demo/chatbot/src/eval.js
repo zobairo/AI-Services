@@ -14,11 +14,10 @@
 
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { answerQuestion, CONFIG } from './answer.js';
+import { CLIENT_DIR } from './ingest.js';
 
-const here = path.dirname(fileURLToPath(import.meta.url));
-const CASES_FILE = path.join(here, '..', 'test-cases.json');
+const CASES_FILE = path.join(CLIENT_DIR, 'test-cases.json');
 
 const GREEN = '\x1b[32m';
 const RED = '\x1b[31m';

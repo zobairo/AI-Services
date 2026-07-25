@@ -1,0 +1,52 @@
+# Automatic HTTPS. Replace the hostnames with your own before deploying.
+# Caddy obtains and renews certificates on its own.
+
+# n8n — your workflow engine. Never expose this without authentication.
+{$N8N_HOST} {
+	reverse_proxy n8n:5678
+
+	# n8n is an admin surface: keep it off search engines and out of frames.
+	header {
+		X-Robots-Tag "noindex, nofollow"
+		X-Frame-Options "DENY"
+		-Server
+	}
+}
+
+# The chat endpoint and widget for a client.
+# Add one block like this per client instance.
+{$CHATBOT_HOST} {
+	reverse_proxy chatbot:3000
+
+	# The widget is embedded in the client's website, so allow that origin
+	# and nothing else. Replace with the client's real domain.
+	@api path /api/*
+	header @api {
+		Access-Control-Allow-Origin "{$CLIENT_WEBSITE_ORIGIN}"
+		Access-Control-Allow-Methods "POST, GET, OPTIONS"
+		Access-Control-Allow-Headers "Content-Type"
+	}
+
+	# RATE LIMITING — required before this endpoint is public, but NOT included
+	# in the standard Caddy image. `rate_limit` is a plugin directive; leaving
+	# it uncommented with the stock image stops Caddy from starting at all.
+	#
+	# Two ways to get it, both covered in deploy/README.md:
+	#   a) build Caddy with the plugin:
+	#        xcaddy build --with github.com/mholt/caddy-ratelimit
+	#   b) put the endpoint behind Cloudflare and rate-limit there
+	#
+	# Once you have the plugin, uncomment:
+	# rate_limit {
+	# 	zone chat {
+	# 		key {remote_host}
+	# 		events 30
+	# 		window 1m
+	# 	}
+	# }
+
+	header {
+		-Server
+		Strict-Transport-Security "max-age=31536000;"
+	}
+}

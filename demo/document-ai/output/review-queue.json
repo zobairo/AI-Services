@@ -1,0 +1,37 @@
+[
+  {
+    "file": "05-messy-scan.txt",
+    "document_type": "invoice",
+    "supplier_name": "FRESH F1ELDS PRODUCE",
+    "invoice_number": null,
+    "invoice_date": null,
+    "due_date": null,
+    "currency": "GBP",
+    "subtotal": null,
+    "tax": 0,
+    "total": null,
+    "confidence": 0,
+    "issues": [
+      {
+        "field": "invoice_number",
+        "severity": "high",
+        "message": "Invoice no. is missing"
+      },
+      {
+        "field": "invoice_date",
+        "severity": "high",
+        "message": "Date is missing"
+      },
+      {
+        "field": "subtotal",
+        "severity": "high",
+        "message": "Subtotal is missing"
+      },
+      {
+        "field": "total",
+        "severity": "high",
+        "message": "Total is missing"
+      }
+    ]
+  }
+]
