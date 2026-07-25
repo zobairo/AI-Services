@@ -1,27 +1,27 @@
 # AI-Services — Masterplan: AI Automation Service Provider
 
-The complete plan for building an **AI automation company** — starting solo, from zero — that businesses pay for builds, monthly retainers, voice agents, training, white-label delivery, and eventually digital products.
+The complete plan for building an **AI automation company** — starting solo, from zero — that businesses pay through **eight revenue streams**: builds, retainers, AI-employee subscriptions, usage margins, training, white-label delivery, affiliate commissions, and digital products.
 
 **Start here → [docs/00-masterplan.md](docs/00-masterplan.md)** — the whole picture on one page.
 
 ## The business in one paragraph
 
-Small and mid-size businesses drown in repetitive communication and document work. You sell them **AI employees** — systems that answer, write, process, and follow up 24/7 — as outcomes: "every call answered", "every lead contacted in 60 seconds", "invoices enter accounting by themselves". Delivery runs on a boring, reusable stack (Claude API + self-hosted n8n + Supabase + a voice platform). Get in the door with a paid AI audit or a flagship service, charge a fixed build fee, then convert every client to a **monthly retainer**. Grow in four phases: solo provider → full catalog → boutique agency with contractors → productized packages and blueprints. The retainer base is the business; the template library is the asset.
+Small and mid-size businesses drown in repetitive communication and document work. You sell them **AI employees** — systems that answer, write, process, and follow up 24/7 — as outcomes: "every call answered", "every lead contacted in 60 seconds", "invoices enter accounting by themselves". Delivery runs on a boring, reusable stack (Claude API + self-hosted n8n + Supabase + a voice platform). Get in the door with a paid AI audit or a flagship service, charge a fixed build fee, then convert every client to a **monthly retainer or a flat-fee AI-Employee subscription**. Grow in five phases: solo provider → full catalog → boutique agency with contractors → productized packages and blueprints → scale, spin off a product, or hold a lean profitable boutique. The recurring base is the business; the template library is the asset.
 
 ## What's for sale
 
-**34 chargeable services in 6 categories** ([full catalog](docs/02-services-catalog.md)):
+**52 chargeable services in 6 categories + 12 industry packages** ([full catalog](docs/02-services-catalog.md)):
 
 | Category | Examples | Build fees |
 |---|---|---|
-| A — Customer-facing AI | Support chatbots, **voice receptionists**, booking agents, review automation | $400 – $8,000 |
-| B — Marketing & growth | Lead-gen, speed-to-lead, content/SEO pipelines, video repurposing | $400 – $6,000 |
-| C — Back office & documents | Invoice processing, contract intake, CV screening, exec inbox, reporting | $400 – $8,000 |
-| D — Internal AI & custom | Knowledge assistants, data analysis, SOP generators, custom agents | $300 – $12,000 |
-| E — Industry packages | Real-estate · clinic · e-commerce · restaurant · law firm · agency white-label | $1,500 – $8,000 setup + $300–900/mo |
-| F — Consulting & products | Paid audits, corporate training, strategy retainers, rescue projects, blueprints | $150 – $3,000/day · $50–500/product |
+| A — Customer-facing AI (9) | Support chatbots, **voice receptionists**, WhatsApp commerce, missed-call rescue, booking agents, review automation | $400 – $8,000 |
+| B — Marketing & growth (12) | Lead-gen, speed-to-lead, content/SEO factories, product visuals, podcast & video pipelines, translation | $300 – $6,000 |
+| C — Back office & documents (12) | Invoice processing, contract intake, CV screening, collections, proposals & tenders, compliance Q&A | $400 – $8,000 |
+| D — Internal AI & sales ops (10) | Knowledge assistants, CRM copilots, **managed AI SDR**, forecasting alerts, site+assistant bundles, custom agents | $300 – $12,000 |
+| E — Industry packages (12) | Real-estate · clinic · e-commerce · restaurant · law firm · gym · hotel · dealership · accounting · education · trades · agency white-label | $1,500 – $8,000 setup + $300–900/mo |
+| F — Consulting, subscriptions & products (9) | Paid audits, training days, **AI-Employee plans ($390–990/mo)**, rescue projects, blueprints, course & community, affiliate income | $150 – $3,000/day · $50–500/product |
 
-Plus recurring: **retainers $100–800/mo** across 3 tiers, usage margins on LLM tokens and voice minutes.
+Plus recurring: **retainers $100–800/mo**, subscription plans, usage margins on LLM tokens and voice minutes, 10–30% affiliate commissions.
 
 ## Headline targets
 
@@ -30,6 +30,7 @@ Plus recurring: **retainers $100–800/mo** across 3 tiers, usage margins on LLM
 | Day 90 | $2–5k/mo run rate, 3–5 retainers |
 | Month 12 | ~$10k/mo run rate, $2.8–3.6k MRR · year-1 revenue $60–90k |
 | Month 24 | $150–250k year-2 revenue, $8–12k MRR, ≥55% recurring |
+| Month 36 | $300–450k year-3 revenue via the chosen Phase-5 path |
 
 Conservative and ambitious scenarios, unit economics, and the assumptions behind every number: [Financial Projections](docs/09-financial-projections.md).
 
@@ -37,16 +38,16 @@ Conservative and ambitious scenarios, unit economics, and the assumptions behind
 
 | Doc | What's inside |
 |---|---|
-| [00 — Masterplan](docs/00-masterplan.md) | Vision, 6 revenue streams, 4 phases, operating principles |
-| [01 — Business Model & Pricing](docs/01-business-model-and-pricing.md) | Price lists, retainer tiers, all revenue streams, getting paid |
-| [02 — Services Catalog](docs/02-services-catalog.md) | The full menu: 34 services with prices + rollout order |
-| [03 — Tech Stack & Architecture](docs/03-tech-stack-and-architecture.md) | Claude + n8n + Supabase core, voice/content extensions, cost math, isolation & safety |
+| [00 — Masterplan](docs/00-masterplan.md) | Vision, 8 revenue streams, 5 phases, operating principles |
+| [01 — Business Model & Pricing](docs/01-business-model-and-pricing.md) | Price lists, retainer tiers, subscriptions, all revenue streams, getting paid |
+| [02 — Services Catalog](docs/02-services-catalog.md) | The full menu: 52 services with prices + rollout order |
+| [03 — Tech Stack & Architecture](docs/03-tech-stack-and-architecture.md) | Claude + n8n + Supabase core, voice/commerce/content extensions, cost math, isolation & safety |
 | [04 — Go-To-Market & Sales](docs/04-go-to-market.md) | Niches, demo-first selling, channels, pipeline math, first-3-clients playbook |
 | [05 — Operations, Legal & Clients](docs/05-operations-legal.md) | Contracts, data protection, onboarding, delivery, SLAs, failure modes |
 | [06 — 90-Day Roadmap (Phase 1)](docs/06-roadmap-90-days.md) | Week-by-week checklists to first revenue |
-| [07 — Scaling Roadmap (Phases 2–4)](docs/07-scaling-roadmap.md) | Months 4–24: full catalog, VA + contractors, packages, products |
-| [08 — Industry Packages](docs/08-industry-packages.md) | Six niche bundles with package pricing |
-| [09 — Financial Projections](docs/09-financial-projections.md) | 24-month scenarios, unit economics, sensitivities |
+| [07 — Scaling Roadmap (Phases 2–5)](docs/07-scaling-roadmap.md) | Months 4–36: full catalog, team, packages, products, the year-3 decision |
+| [08 — Industry Packages](docs/08-industry-packages.md) | Twelve niche bundles with package pricing |
+| [09 — Financial Projections](docs/09-financial-projections.md) | 36-month scenarios, unit economics, sensitivities |
 
 ## How to use this repo
 

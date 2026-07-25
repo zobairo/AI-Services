@@ -11,8 +11,11 @@ Scenario math for the first 24 months. All numbers are **planning estimates, not
 | Voice client (A2) | $200–600/mo + minutes | platform + telephony + tokens ≈ $0.06–0.15/min, billed at cost +30–50% | 55–70% |
 | Package client (E1–E5) | $1.5–8k setup + $300–900/mo | shared templates → falling per-client cost | 60–75% at scale |
 | Workshop day (F3) | $300–3,000/day | your day + reused materials | ~90% |
+| AI Employee subscription (F7) | $390–990/mo + setup | $40–80 infra/usage + ~1 h/mo (templated) | 70–85% at scale |
+| Managed AI SDR (D8) | $500–1,500/mo | sending infra + tokens + ~2–4 h/mo | 55–70% |
 | Blueprint (F6) | $50–500 | ~$0 marginal | ~100% |
 | White-label deal (F5) | 60–70% of list | same delivery cost | thinner but zero acquisition cost |
+| Affiliate commissions (F8) | 10–30% recurring | $0 | ~100%, small per client, compounds |
 
 **Capacity reality (solo):** ~2 small builds + retainer care + selling per month sustainably, or 1 mid-size package. This caps Phase 1–2 revenue and is exactly why contractors appear in Phase 3.
 
@@ -45,6 +48,18 @@ Assumptions: 1–2 contractor builders (cost ≈ 30–40% of the project prices 
 | Net margin after contractors/VA/infra | ~60% | ~55% | ~50% |
 
 The margin *decreases* as revenue grows — that's normal (you're buying leverage). The MRR share must *increase*: **target ≥55% of revenue recurring by month 24** (base case). Recurring share, not top line, is what makes the business durable and sellable.
+
+## Year 3 (Phase 5) — outlook by path
+
+Year 3 depends on the path chosen at the Phase-5 gate ([07](07-scaling-roadmap.md)); rough shapes, to be replaced with real numbers at month 24:
+
+| Path | Year-3 revenue | Margin profile | Team |
+|---|---|---|---|
+| A — Grow the agency | $300–700k | 35–45% EBITDA | 3–6 people |
+| B — All-in on product | $150–400k (services shrink, product MRR grows) | Investment year; product MRR ≥ service MRR by month 36 | 2–4 people |
+| C — Lean boutique | $150–250k | ≥60% net | you + 1 contractor |
+
+Masterplan headline row ("Year 3: $120–180k / $300–450k / $700k+") maps conservative→C-ish, base→A/B blend, ambitious→A executed well.
 
 ## Sensitivity — what actually moves the numbers
 

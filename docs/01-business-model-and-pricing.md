@@ -49,7 +49,12 @@ Services and retainers carry Phase 1. From Phase 2 onward, these streams stack o
 | AI strategy retainers (F2) | $300–1,500/mo | Advisor seat; no delivery cost |
 | Automation rescue (F4) | Diagnosis fee + repair quote | Endless demand, instant trust, converts to retainers |
 | White-label for agencies (F5) | 60–70% of list price | Zero acquisition cost; recurring deal flow |
+| **AI Employee subscriptions (F7)** | $390–990/mo per plan + setup $500–1,500 | Productized retainer: one invoice, no scoping, sellable without a sales call |
+| Affiliate & reseller (F8) | 10–30% recurring commissions | Passive income on tools you deploy anyway — only ever recommend what you'd use regardless |
 | Automation blueprints (F6) | $50–500 per product | ~100% margin on work already done (Phase 4) |
+| Course & community (F9) | $50–300/course · $20–50/mo membership | Authority + income + a pipeline of certified partners (Phase 4) |
+
+**The AI Employee subscription deserves a special note:** it is the bridge between custom services and a product. A small business doesn't want a "workflow automation project" — it wants a receptionist that costs $490 instead of $2,000. Same delivery stack, quota-based usage, standardized onboarding form. From Phase 3 these plans sell from the website without a sales call — details in the [Services Catalog, F7](02-services-catalog.md).
 
 ## How to price
 

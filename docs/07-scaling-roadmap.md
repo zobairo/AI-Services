@@ -1,4 +1,4 @@
-# Scaling Roadmap — Phases 2–4 (Months 4–24)
+# Scaling Roadmap — Phases 2–5 (Months 4–36)
 
 Continues from the [90-Day Roadmap](06-roadmap-90-days.md) (Phase 1). Each phase has entry conditions — **do not start a phase early because it looks more exciting than selling.** Money model per phase: [Financial Projections](09-financial-projections.md).
 
@@ -49,7 +49,7 @@ Continues from the [90-Day Roadmap](06-roadmap-90-days.md) (Phase 1). Each phase
 - [ ] Client concentration check quarterly: no client >40% ([00 principles](00-masterplan.md))
 - [ ] **Phase gate:** $15k+/mo, $8k+ MRR, delivery running at target margin without your hands on every build → Phase 4
 
-## Phase 4 — Productize (months 18–24+)
+## Phase 4 — Productize (months 18–24)
 
 **Entry condition:** Phase 3 gate passed; template library mature; you can see from sales data which automation is bought again and again.
 **Exit target:** products ≥20% of revenue; a validated decision (yes or no, with data) on a SaaS spin-off.
@@ -58,7 +58,35 @@ Continues from the [90-Day Roadmap](06-roadmap-90-days.md) (Phase 1). Each phase
 - [ ] **Productized delivery:** the best-selling package gets a fixed onboarding form, fixed timeline, fixed price — sellable without a sales call
 - [ ] **SaaS decision:** the spin-off candidate is the automation clients ask for most with the least customization (history says: booking agents, review automation, or speed-to-lead). Validate with 10 paying design partners from your client base before writing product code. **The services business keeps funding everything — don't starve it for the product dream**
 - [ ] Partner network: recruit 2–3 more white-label agencies; consider a certified-setup program for your blueprints
-- [ ] Year-2 review against [projections](09-financial-projections.md); set the year-3 course (grow the agency, go all-in on product, or hold a profitable boutique)
+- [ ] **Launch F9 (course & community):** turn your delivery know-how into a "build AI automations for local businesses" course + paid community for other builders — they buy blueprints, become certified partners, and market you for free
+- [ ] **AI-Employee subscriptions (F7) at full lineup:** all three plans live, sold without sales calls from the website
+- [ ] Year-2 review against [projections](09-financial-projections.md); enter Phase 5 with data
+
+## Phase 5 — Scale or spin off (months 24–36)
+
+**Entry condition:** Phase 4 gate passed; you have 24 months of data on what sells, what retains, and what you enjoy running.
+**This phase is a decision, then execution of that decision.** Three valid paths — pick with the year-2 numbers, not with mood:
+
+### Path A — Grow the agency
+For you if: packages + subscriptions sell steadily, delivery margin holds ≥50% with contractors, you like leading people.
+- [ ] Hire: 2–4 builders, 1 delivery lead (your QC clone), part-time salesperson on commission
+- [ ] Open a second vertical market or a second geography/language market
+- [ ] Target: $25–60k/mo, you fully out of delivery, EBITDA ≥35%
+- [ ] Optional: this is the shape buyers acquire — recurring base + templates + team = a sellable asset
+
+### Path B — All-in on the product
+For you if: one blueprint/SaaS candidate shows pull (10+ paying design partners, low-churn, low-custom demand).
+- [ ] Keep a slimmed service arm (top 2 packages only) as funding + customer-discovery engine
+- [ ] Build the product on the validated automation; your retainer clients are the beta base and first testimonials
+- [ ] Target: product MRR ≥ service MRR by month 36; raise or bootstrap deliberately, not by accident
+
+### Path C — Lean profitable boutique
+For you if: $15–25k/mo with 1 contractor and mostly-recurring revenue is the life you actually want.
+- [ ] Prune to the highest-margin 60% of clients and 2 packages; raise prices on the rest until they leave or become highest-margin too
+- [ ] Automate your own ops with your own catalog (you are also a client)
+- [ ] Target: same revenue, fewer hours, ≥60% net margin — a calm, durable business
+
+- [ ] **Month-36 review:** whichever path — check against [projections](09-financial-projections.md) year-3 scenarios and reset the 3-year horizon
 
 ## Standing rules across all phases
 

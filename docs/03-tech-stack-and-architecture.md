@@ -24,12 +24,17 @@ Added as the service menu grows through Phase 2–3 ([rollout order](02-services
 
 | For services | Addition | Notes |
 |---|---|---|
-| Voice (A2, A3, A5) | Voice-agent platform (Vapi/Retell-class) + telephony (Twilio-class number) | All-in cost ≈ $0.06–0.15/min (STT + LLM + TTS + telephony); bill minutes at cost +30–50%. Always AI disclosure + instant human-transfer path |
-| Content & SEO (B4–B8) | CMS/scheduler APIs, image generation API for creatives, transcript APIs for video repurposing | Human approval queue before anything publishes — no exceptions |
-| Reviews (A7) | Google Business Profile / review-platform APIs | Angry reviews always route to a human first |
-| Data analysis (D5) | Read-only DB access + chart rendering; Claude for SQL-from-questions | Read-only credentials are a hard rule |
+| Voice (A2, A3, A9) | Voice-agent platform (Vapi/Retell-class) + telephony (Twilio-class number) | All-in cost ≈ $0.06–0.15/min (STT + LLM + TTS + telephony); bill minutes at cost +30–50%. Always AI disclosure + instant human-transfer path |
+| WhatsApp commerce (A8) | WhatsApp Business API catalog + payment links (Stripe/local PSP) | Order writes to the client's sheet/CRM/POS; payment always via link, never card data in chat |
+| Content & SEO (B4–B12) | CMS/scheduler APIs, image generation/upscaling APIs (product visuals), transcript APIs (video/podcast), translation glossaries | Human approval queue before anything publishes — no exceptions |
+| Reviews & listening (A7, B9) | Google Business Profile / review-platform APIs, mention monitoring | Angry reviews and negative mentions always route to a human first |
+| Data analysis & forecasting (D5, D9) | Read-only DB access + chart rendering; Claude for SQL-from-questions; scheduled anomaly checks | Read-only credentials are a hard rule |
 | Reporting (C7) | Scheduled n8n flows + HTML-to-PDF rendering | Branded template per client, reused everywhere |
 | Recruitment (C3) | ATS APIs / job-board parsing | Score with written reasoning; human makes every reject/advance decision |
+| Managed SDR (D8) | Dedicated sending domains + warm-up + deliverability monitoring | Volume caps, opt-out handling, spam-law compliance are part of the product, not optional |
+| Finance ops (C8–C11) | Accounting-tool APIs, bank-export parsing, e-invoice formats | Human approval before anything is sent to a customer or filed |
+| Site bundles (D10) | Static site stack (Framer/Astro-class) + embedded A1 widget | One template family reused; the chatbot is the differentiator |
+| AI Employee plans (F7) | Standardized onboarding form + quota metering per plan | Same stack, fixed configuration menu — no custom scoping inside a plan |
 
 **Model tiers — use the cheapest model that passes your test cases.** High-volume, simple steps (classify an email, extract a field, route a ticket) → small/fast tier (Haiku-class). Standard drafting, summarizing, RAG answers → mid tier (Sonnet-class). Complex multi-step agent reasoning → top tier, sparingly. This single habit is the difference between 80% and 30% margin on retainers.
 

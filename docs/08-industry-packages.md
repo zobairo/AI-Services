@@ -1,6 +1,8 @@
 # Industry Packages
 
-Bundles of catalog services ([02](02-services-catalog.md)) wrapped in one pitch, one price, one onboarding — per niche. Packages are how you escape "custom quote every time": easier to sell ("this is what clinics get"), easier to deliver (same template stack), easier to price up (bundle value > sum of parts to the client, while your delivery cost per service drops).
+Bundles of catalog services ([02](02-services-catalog.md)) wrapped in one pitch, one price, one onboarding — per niche. **Twelve packages.** Packages are how you escape "custom quote every time": easier to sell ("this is what clinics get"), easier to deliver (same template stack), easier to price up (bundle value > sum of parts to the client, while your delivery cost per service drops).
+
+Launch packages in the order your niches prove themselves — 2 packages by end of Phase 2, the rest through Phase 3 ([roadmap](07-scaling-roadmap.md)). Every package one-pager follows the same layout: outcome headline, what's included, price, 2 case-study numbers.
 
 Pricing shows **setup + monthly**. Setup ranges: lower end while building reputation, upper end established. Monthly includes hosting, monitoring, the retainer SLA (Growth tier by default — [05](05-operations-legal.md)), and an agreed usage allowance; voice minutes billed as usage beyond allowance.
 
@@ -78,6 +80,84 @@ Pricing shows **setup + monthly**. Setup ranges: lower end while building reputa
 - Terms: minimum 2 client projects/quarter to keep program status; NDA + non-solicitation both ways ([05](05-operations-legal.md)).
 
 One active agency ≈ 4–10 delivered packages/year with zero marketing cost. Target: 2–3 active agencies by Phase 3 ([07](07-scaling-roadmap.md)).
+
+## E7 — Gym & Fitness Studio Package — "Fill every class, keep every member"
+
+*For: gyms and studios losing trial leads and quietly churning members.*
+
+| Included | Catalog # |
+|---|---|
+| Trial-lead follow-up within 60 seconds + tour/class booking | B3, A5 |
+| Member FAQ assistant (schedules, freezes, pricing) on WhatsApp/site | A1 |
+| Win-back campaigns for inactive members + no-show recovery | A3, D1 |
+| Review requests after milestones + reply drafts | A7 |
+
+**Setup $1,500–3,500 · Monthly $300–600.** Upsells: class-demand forecasting (D9), social content (B4).
+
+## E8 — Hotel & Travel Package — "Every guest question answered, in their language"
+
+*For: independent hotels, guesthouses, and tour operators drowning in repeated questions across channels.*
+
+| Included | Catalog # |
+|---|---|
+| Guest assistant: availability, amenities, directions, policies — web + WhatsApp | A1, A6 |
+| Voice answering for reception overflow | A9 |
+| Pre-arrival upsell messages (upgrades, tours, late checkout) | D1 |
+| Review replies + post-stay review requests | A7 |
+
+**Setup $2,500–6,000 · Monthly $400–800 + minutes.** Multilingual is the killer feature here. Upsells: full voice receptionist (A2), local-experience content (B4), translation of listings (B12).
+
+## E9 — Car Dealership Package — "No lead waits, no test drive missed"
+
+*For: dealerships buying portal leads and answering them hours later.*
+
+| Included | Catalog # |
+|---|---|
+| Speed-to-lead on listing inquiries + test-drive booking | B3, A5 |
+| WhatsApp assistant: stock questions, financing basics, trade-in intake | A1, C4 |
+| Appointment reminders + no-show recovery | A3 |
+| Review automation | A7 |
+
+**Setup $2,500–6,000 · Monthly $400–800.** Financing/legal answers are info-only with human handoff (contract clause). Upsells: inventory-photo enhancement (B10), quote generation (C10).
+
+## E10 — Accounting Firm Package — "The season without the overtime"
+
+*For: accounting and bookkeeping firms processing piles of client documents.*
+
+| Included | Catalog # |
+|---|---|
+| Invoice/receipt processing at volume with review queue | C1 |
+| Client document chasing (polite automated reminders until docs arrive) | C9-style flows, D1 |
+| Client FAQ assistant (deadlines, requirements, "what do I send you?") | A1 |
+| Deadline & status reporting per client | C7 |
+
+**Setup $3,000–7,000 · Monthly $500–900.** Sells best August–December before tax season. Upsells: expense categorization for their clients (C8, white-labeled — every accounting firm is a mini agency-partner), compliance Q&A (C12).
+
+## E11 — Education & Course Creator Package — "Support and sales while you teach"
+
+*For: course creators, training centers, and tutoring businesses.*
+
+| Included | Catalog # |
+|---|---|
+| Student support assistant (course content Q&A, schedules, tech help) | A1, D2 |
+| Enrollment follow-up: abandoned checkouts, payment plans, cohort deadlines | B3, C9 |
+| Content repurposing: lessons → clips, posts, email sequences | B8, B4 |
+| Review/testimonial collection | A7 |
+
+**Setup $1,500–4,000 · Monthly $300–600.** Upsells: community Q&A assistant, multilingual (A6), podcast pipeline (B11).
+
+## E12 — Home Services & Trades Package — "Answer every call from the ladder"
+
+*For: plumbers, electricians, HVAC, cleaners — great at the work, unreachable during it.*
+
+| Included | Catalog # |
+|---|---|
+| Missed-call text-back + after-hours AI answering | A9 |
+| Job booking with the real calendar + reminders | A5, A3 |
+| Quote follow-up sequences (quotes die silently — follow-up wins them) | C10, B3 |
+| Review requests after every completed job | A7 |
+
+**Setup $1,500–3,500 · Monthly $300–600 + minutes.** Simplest package, biggest per-dollar impact, huge market. Natural first package alongside E4. Upsell: full voice receptionist (A2).
 
 ## Package rules
 
