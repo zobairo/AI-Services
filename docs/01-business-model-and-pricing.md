@@ -1,8 +1,8 @@
 # Business Model & Pricing
 
-This plan assumes a solo, technical founder starting from zero, selling AI automation services to small and mid-size businesses. Goal: reach recurring monthly revenue, not just one-off gigs.
+This plan assumes a solo, technical founder starting from zero, selling AI automation services to small and mid-size businesses. Goal: reach recurring monthly revenue, not just one-off gigs. This doc covers the core service model and prices; the full six-stream revenue map is in the [Masterplan](00-masterplan.md), and the complete service menu with per-service prices is in the [Services Catalog](02-services-catalog.md).
 
-## The three revenue models
+## The three core revenue models
 
 | Model | What it is | Pros | Cons |
 |---|---|---|---|
@@ -14,16 +14,19 @@ This plan assumes a solo, technical founder starting from zero, selling AI autom
 
 ## Price ranges (USD)
 
-These are realistic ranges for freelance/small-agency AI automation work. Local markets differ; treat them as anchors, not rules.
+These are realistic ranges for freelance/small-agency AI automation work. Local markets differ; treat them as anchors, not rules. The lead services:
 
 | Service | Starting out (first ~3 months) | After reputation (6+ months) |
 |---|---|---|
 | AI support chatbot (site + WhatsApp, RAG on client docs) | $500 – $1,500 | $2,000 – $5,000 |
+| AI voice receptionist (inbound calls, booking) | $1,000 – $2,500 | $3,000 – $8,000 |
 | Document processing automation (invoices, forms → data) | $750 – $2,000 | $2,500 – $7,000 |
 | Lead-gen / outreach automation | $500 – $1,500 | $2,000 – $5,000 |
 | Internal AI assistant (company knowledge base) | $1,000 – $2,500 | $3,000 – $8,000 |
 | Custom AI agent workflow (multi-step, e.g. quoting, booking) | $1,500 – $3,000 | $4,000 – $12,000 |
 | AI audit / discovery (paid entry offer) | $150 – $500 | $500 – $1,500 |
+
+The **full menu — 30+ chargeable services** with per-service prices — is the master table in the [Services Catalog](02-services-catalog.md). Niche bundles with package pricing (setup $1,500–8,000 + monthly $300–900) are in [Industry Packages](08-industry-packages.md).
 
 **Monthly retainer tiers** (also used in [Operations — SLA tiers](05-operations-legal.md)):
 
@@ -33,7 +36,20 @@ These are realistic ranges for freelance/small-agency AI automation work. Local 
 | Growth | $250 – $350/mo | Basic + 2 hrs/mo of changes, monthly report, priority response |
 | Scale | $500 – $800/mo | Growth + 5 hrs/mo improvements, new small automations, same-day response |
 
-LLM/API usage above the allowance is passed through **at cost + 20–30% margin** — never absorb unlimited token costs on a fixed fee.
+LLM/API usage above the allowance is passed through **at cost + 20–30% margin** — never absorb unlimited token costs on a fixed fee. Voice minutes (calls handled by AI receptionists) are usage too: billed at cost + 30–50%.
+
+## Beyond services: the other revenue streams
+
+Services and retainers carry Phase 1. From Phase 2 onward, these streams stack on top (details per service in [Catalog category F](02-services-catalog.md), timing in the [Scaling Roadmap](07-scaling-roadmap.md)):
+
+| Stream | Pricing | Why it's good money |
+|---|---|---|
+| Paid AI audits (F1) | $150–1,500 one-off, credited against the build | You get paid to do sales discovery |
+| Corporate training workshops (F3) | $300–3,000/day | ~90% margin, reused materials, generates build leads |
+| AI strategy retainers (F2) | $300–1,500/mo | Advisor seat; no delivery cost |
+| Automation rescue (F4) | Diagnosis fee + repair quote | Endless demand, instant trust, converts to retainers |
+| White-label for agencies (F5) | 60–70% of list price | Zero acquisition cost; recurring deal flow |
+| Automation blueprints (F6) | $50–500 per product | ~100% margin on work already done (Phase 4) |
 
 ## How to price
 
@@ -51,6 +67,7 @@ The math: **clients × average deal**. Keep targets honest.
 | Months 1–3 | $1,000 – $3,000 total | 2–4 small paid projects (cheap-but-not-free), first testimonials |
 | Months 4–6 | $2,000 – $4,000/month | 1–2 projects/month at better prices + first 3–5 retainers |
 | Months 7–12 | $5,000 – $10,000/month | ~$1.5–3k MRR from 8–12 retainers + 1–2 mid-size builds/month |
+| Year 2 | $150k – $250k total (base case) | Contractors + packages + training + white-label — full scenarios in [Financial Projections](09-financial-projections.md) |
 
 If month 3 ends with zero paying clients, the problem is almost always the niche or the outreach volume, not the technology — see [Go-To-Market](04-go-to-market.md) and the go/no-go checkpoints in the [Roadmap](06-roadmap-90-days.md).
 

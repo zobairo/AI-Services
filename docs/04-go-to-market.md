@@ -10,17 +10,18 @@ Technology does not get you clients. This document is the actual job for the fir
 2. **Money to spend** (they already pay staff or agencies for this work)
 3. **Your access** (you know someone in it, worked in it, or can physically walk into their offices)
 
-Five beginner-friendly niches and the specific pain to lead with:
+Six beginner-friendly niches and the specific pain to lead with (catalog codes from the [Services Catalog](02-services-catalog.md)):
 
-| Niche | Painful process they'll pay to automate | Matching service |
-|---|---|---|
-| Real-estate agencies | Lead follow-up within minutes + listing descriptions | Lead-gen automation + content pipeline |
-| E-commerce brands | Same 20 support questions, order status, returns | Support chatbot |
-| Recruitment agencies | CV screening against job specs, candidate outreach | Document processing + outreach automation |
-| Clinics / dental | Appointment requests, reminders, FAQ handling | Chatbot + workflow automation |
-| Marketing / web agencies | Client reporting, content drafts (white-label) | Content pipeline + report automation |
+| Niche | Painful process they'll pay to automate | Matching service | Later: package |
+|---|---|---|---|
+| Real-estate agencies | Lead follow-up within minutes + listing descriptions | B3 + B4 | [E1](08-industry-packages.md) |
+| E-commerce brands | Same 20 support questions, order status, returns | A1 | [E3](08-industry-packages.md) |
+| Recruitment agencies | CV screening against job specs, candidate outreach | C3 + B2 | custom |
+| Clinics / dental | Missed calls, appointment requests, reminders, FAQs | A1 + A5, later A2 | [E2](08-industry-packages.md) |
+| Restaurants / hospitality | Unanswered phones, reviews, weekly socials | A2 + A7 | [E4](08-industry-packages.md) |
+| Marketing / web agencies | Client reporting, content drafts (white-label) | C7 + B4 | [E6](08-industry-packages.md) |
 
-Full service definitions are in the [Services Catalog](02-services-catalog.md).
+In Phase 1 you sell single services from this table. From Phase 3, the [industry packages](08-industry-packages.md) become the lead offer — same niches, bundled pitch, higher deal size.
 
 ## Sell the outcome, not the technology
 

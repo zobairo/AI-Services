@@ -1,6 +1,6 @@
-# 90-Day Roadmap & Milestones
+# 90-Day Roadmap & Milestones (Phase 1)
 
-Week-by-week, tickable. The only goal that matters: **paying clients and the beginning of recurring revenue by day 90.** Building comes second; selling comes first.
+Week-by-week, tickable. The only goal that matters: **paying clients and the beginning of recurring revenue by day 90.** Building comes second; selling comes first. This is Phase 1 of the [Masterplan](00-masterplan.md); months 4–24 continue in the [Scaling Roadmap](07-scaling-roadmap.md).
 
 ## Days 1–14 — Foundation
 
@@ -52,7 +52,7 @@ Milestones:
 - [ ] Approach 3–5 web/marketing agencies for white-label partnership
 - [ ] Keep the daily outreach rhythm (reduced to ~8–10 touches/day while delivering)
 - [ ] Day-60 checkpoint: ≥2 projects delivered, ≥1 retainer signed, pipeline ≥5 warm conversations — else diagnose: pricing? niche? delivery speed?
-- [ ] Day-90 review: revenue math, hours per client, which service sold best → double down on that service/niche for the next 90 days
+- [ ] Day-90 review: revenue math, hours per client, which service sold best → double down on that service/niche, then enter **Phase 2** of the [Scaling Roadmap](07-scaling-roadmap.md) (voice services, more categories, VA hire)
 
 ## Weekly KPIs (track every Friday, 10 minutes, one spreadsheet)
 

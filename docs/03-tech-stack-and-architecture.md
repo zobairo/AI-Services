@@ -18,6 +18,19 @@ Rule number one: **boring, cheap, reusable**. Every tool below is chosen so one 
 | Payments | Stripe (+ Wise/Payoneer) | Retainer subscriptions, invoices | % of revenue |
 | Monitoring | n8n error workflows → Telegram/Slack alerts + run logs | You must know an automation broke before the client does | $0 |
 
+### Stack extensions for the full catalog
+
+Added as the service menu grows through Phase 2–3 ([rollout order](02-services-catalog.md), [scaling roadmap](07-scaling-roadmap.md)) — not on day one:
+
+| For services | Addition | Notes |
+|---|---|---|
+| Voice (A2, A3, A5) | Voice-agent platform (Vapi/Retell-class) + telephony (Twilio-class number) | All-in cost ≈ $0.06–0.15/min (STT + LLM + TTS + telephony); bill minutes at cost +30–50%. Always AI disclosure + instant human-transfer path |
+| Content & SEO (B4–B8) | CMS/scheduler APIs, image generation API for creatives, transcript APIs for video repurposing | Human approval queue before anything publishes — no exceptions |
+| Reviews (A7) | Google Business Profile / review-platform APIs | Angry reviews always route to a human first |
+| Data analysis (D5) | Read-only DB access + chart rendering; Claude for SQL-from-questions | Read-only credentials are a hard rule |
+| Reporting (C7) | Scheduled n8n flows + HTML-to-PDF rendering | Branded template per client, reused everywhere |
+| Recruitment (C3) | ATS APIs / job-board parsing | Score with written reasoning; human makes every reject/advance decision |
+
 **Model tiers — use the cheapest model that passes your test cases.** High-volume, simple steps (classify an email, extract a field, route a ticket) → small/fast tier (Haiku-class). Standard drafting, summarizing, RAG answers → mid tier (Sonnet-class). Complex multi-step agent reasoning → top tier, sparingly. This single habit is the difference between 80% and 30% margin on retainers.
 
 ## Reference architecture
