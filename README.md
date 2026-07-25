@@ -1,8 +1,13 @@
-# AI-Services — Masterplan: AI Automation Service Provider
+# AI-Services — AI Automation Service Provider
 
-The complete plan for building an **AI automation company** — starting solo, from zero — that businesses pay through **eight revenue streams**: builds, retainers, AI-employee subscriptions, usage margins, training, white-label delivery, affiliate commissions, and digital products.
+The complete plan for building an **AI automation company** — starting solo, from zero — **plus the working starter kit to run it**: a live chatbot demo, the sales site, client paperwork, outreach scripts, and a quoting tool.
 
-**Start here → [docs/00-masterplan.md](docs/00-masterplan.md)** — the whole picture on one page.
+**Read the plan → [docs/00-masterplan.md](docs/00-masterplan.md)** · **Run the demo → [demo/chatbot](demo/chatbot)**
+
+```bash
+cd demo/chatbot && npm run ingest && npm start   # working AI assistant, no API key needed
+node tools/quote.js --package E2                 # price a real deal
+```
 
 ## The business in one paragraph
 
@@ -49,11 +54,44 @@ Conservative and ambitious scenarios, unit economics, and the assumptions behind
 | [08 — Industry Packages](docs/08-industry-packages.md) | Twelve niche bundles with package pricing |
 | [09 — Financial Projections](docs/09-financial-projections.md) | 36-month scenarios, unit economics, sensitivities |
 
+## The starter kit — what's already built
+
+The plan's Days 1–14 deliverables, ready to use:
+
+| What | Where | Use it for |
+|---|---|---|
+| **Working AI chatbot** (service A1) | [`demo/chatbot/`](demo/chatbot) | Your demo #1 and the codebase for real client builds. Runs with zero dependencies; no API key needed for mock mode. Includes an acceptance-test suite. |
+| **Sales website** | [`site/index.html`](site/index.html) | Your one-page site. Edit the CONFIG block at the bottom, then deploy — no build step. |
+| **Quote calculator** | [`tools/quote.js`](tools/quote.js) | Price any service or package with margin and cost-of-goods math built in. |
+| **Proposal template** | [`templates/proposal.md`](templates/proposal.md) | Send within 24h of every call. |
+| **Service agreement** | [`templates/service-agreement.md`](templates/service-agreement.md) | Scope, IP, AI disclaimers, liability — review once with a local professional, reuse forever. |
+| **Kick-off checklist** | [`templates/kickoff-checklist.md`](templates/kickoff-checklist.md) | The 45-minute call that prevents most project failures. |
+| **Monthly report** | [`templates/monthly-report.md`](templates/monthly-report.md) | Your churn-prevention and upsell engine. |
+| **Outreach scripts** | [`sales/outreach-scripts.md`](sales/outreach-scripts.md) | Cold email, follow-ups, discovery call, objection handling. |
+| **Trackers** | [`trackers/`](trackers) | Weekly KPIs and the sales pipeline. |
+
+```bash
+# See the demo working (mock mode — no API key required)
+cd demo/chatbot
+npm run ingest && npm start          # http://localhost:3000
+npm test                             # acceptance tests
+npm run ask -- "do you take Delta Dental?"
+
+# Real answers from Claude
+export ANTHROPIC_API_KEY=sk-ant-...
+
+# Price a deal
+node tools/quote.js A1 --chats 3000
+node tools/quote.js --package E12
+node tools/quote.js --list
+```
+
 ## How to use this repo
 
 1. Read [00 — Masterplan](docs/00-masterplan.md), then pick your niche with [04 — Go-To-Market](docs/04-go-to-market.md) — every other decision depends on it.
-2. Execute [06 — the 90-Day Roadmap](docs/06-roadmap-90-days.md) checklist by checklist. **Sell only the 2 lead services in Phase 1** — the big catalog switches on gradually via the [rollout order](docs/02-services-catalog.md).
-3. At each phase gate in [07 — Scaling Roadmap](docs/07-scaling-roadmap.md), check the numbers against [09 — Projections](docs/09-financial-projections.md) and move forward on data, not feelings.
-4. Update the docs as reality teaches you — this is an operating manual, not a museum piece.
+2. Run the [chatbot demo](demo/chatbot), then swap `knowledge/` for a real prospect's website content. That is your first demo asset, and the demo-first motion is what actually closes deals.
+3. Execute [06 — the 90-Day Roadmap](docs/06-roadmap-90-days.md) checklist by checklist. **Sell only the 2 lead services in Phase 1** — the big catalog switches on gradually via the [rollout order](docs/02-services-catalog.md).
+4. At each phase gate in [07 — Scaling Roadmap](docs/07-scaling-roadmap.md), check the numbers against [09 — Projections](docs/09-financial-projections.md) and move forward on data, not feelings.
+5. Update the docs and templates as reality teaches you — this is an operating manual, not a museum piece.
 
 > All prices and targets are planning estimates for SMB markets in 2026; adjust to your local market. The legal/ops content is practical guidance, not legal advice.

@@ -1,0 +1,5 @@
+company,contact_name,niche,source,pain_observed,stage,last_touch_date,next_action,next_action_date,deal_value,notes
+# stage: researched | touched | replied | call_booked | demo_sent | proposal_sent | won | lost | revisit
+# source: warm | linkedin | email | upwork | local | agency_partner | referral
+# Rule: every row must have a next_action and a date. A row without one is a lead you have already lost.
+Example Dental,Ana Reyes,clinic,local,misses calls during treatments,researched,2026-01-05,send demo video,2026-01-07,2500,example row - delete

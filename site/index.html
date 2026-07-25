@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Automation for Local Business — Answer every customer, 24/7</title>
+<meta name="description" content="We build AI assistants that answer your customers, book appointments and handle paperwork — 24 hours a day, for less than a part-time hire.">
+<!--
+  ONE-PAGE SALES SITE (docs/04-go-to-market.md, Days 1-14)
+
+  Before publishing, edit the CONFIG block below: your name, contact details,
+  booking link, and the two demo videos. Everything else already reflects the
+  offer and pricing in docs/01 and docs/08.
+
+  Deploy: drag this file onto Netlify/Cloudflare Pages, or serve it from the
+  same VPS as your n8n instance. It has no dependencies and no build step.
+-->
+<style>
+  :root {
+    --bg: #ffffff; --bg-alt: #f5f7f9; --ink: #101820; --muted: #5a6b78;
+    --line: #e3e9ee; --brand: #0f6be0; --brand-ink: #ffffff; --accent: #0b8c6f;
+    --card: #ffffff; --shadow: 0 1px 2px rgba(16,24,32,.06), 0 8px 24px rgba(16,24,32,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e1419; --bg-alt: #141c23; --ink: #e9eff4; --muted: #9aabb8;
+      --line: #24303a; --brand: #4d9bff; --brand-ink: #06121f; --accent: #33bb98;
+      --card: #161e26; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 0 20px; }
+  section { padding: 72px 0; }
+  section.alt { background: var(--bg-alt); }
+  h1, h2, h3 { line-height: 1.2; margin: 0 0 16px; letter-spacing: -0.02em; }
+  h1 { font-size: clamp(32px, 5.2vw, 52px); }
+  h2 { font-size: clamp(25px, 3.4vw, 34px); }
+  h3 { font-size: 19px; }
+  p { margin: 0 0 16px; }
+  .lead { font-size: clamp(18px, 2.2vw, 21px); color: var(--muted); max-width: 620px; }
+  .eyebrow {
+    text-transform: uppercase; letter-spacing: .09em; font-size: 12.5px;
+    font-weight: 700; color: var(--accent); margin-bottom: 10px;
+  }
+  nav {
+    position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+  .logo { font-weight: 700; letter-spacing: -0.02em; }
+  nav a { color: var(--muted); text-decoration: none; margin-left: 22px; font-size: 15px; }
+  nav a:hover { color: var(--ink); }
+  nav .btn { margin-left: 22px; }
+  .btn {
+    display: inline-block; padding: 13px 22px; border-radius: 9px; background: var(--brand);
+    color: var(--brand-ink); text-decoration: none; font-weight: 650; font-size: 16px;
+    border: 1px solid transparent;
+  }
+  .btn:hover { filter: brightness(1.07); }
+  .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+  .btn.sm { padding: 9px 16px; font-size: 14.5px; }
+  .hero { padding: 84px 0 64px; }
+  .hero .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .trust { margin-top: 26px; color: var(--muted); font-size: 14.5px; }
+  .grid { display: grid; gap: 20px; }
+  .g2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .g3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 13px;
+    padding: 24px; box-shadow: var(--shadow);
+  }
+  .card h3 { margin-bottom: 8px; }
+  .card p { color: var(--muted); font-size: 15.5px; margin-bottom: 0; }
+  .price { font-weight: 700; color: var(--ink); font-size: 15.5px; margin-top: 14px; }
+  .pkg { display: flex; flex-direction: column; }
+  .pkg ul { margin: 12px 0 18px; padding-left: 18px; color: var(--muted); font-size: 15.5px; }
+  .pkg li { margin-bottom: 6px; }
+  .pkg .price { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line); }
+  .featured { border-color: var(--brand); position: relative; }
+  .tag {
+    position: absolute; top: -11px; right: 18px; background: var(--brand); color: var(--brand-ink);
+    font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+  }
+  .steps { counter-reset: step; }
+  .step { display: flex; gap: 16px; margin-bottom: 22px; align-items: flex-start; }
+  .step::before {
+    counter-increment: step; content: counter(step);
+    flex: 0 0 34px; height: 34px; border-radius: 50%; background: var(--brand); color: var(--brand-ink);
+    display: grid; place-items: center; font-weight: 700; font-size: 15px;
+  }
+  .step p { margin: 4px 0 0; color: var(--muted); font-size: 15.5px; }
+  .demo-frame {
+    border: 1px solid var(--line); border-radius: 13px; overflow: hidden; background: var(--card);
+    box-shadow: var(--shadow);
+  }
+  .demo-frame .bar {
+    display: flex; gap: 6px; padding: 11px 14px; border-bottom: 1px solid var(--line); background: var(--bg-alt);
+  }
+  .demo-frame .bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+  .demo-frame .body { padding: 20px; }
+  .bubble { padding: 10px 14px; border-radius: 13px; font-size: 15px; margin-bottom: 10px; max-width: 84%; }
+  .bubble.c { background: var(--brand); color: var(--brand-ink); margin-left: auto; border-bottom-right-radius: 4px; }
+  .bubble.b { background: var(--bg-alt); border-bottom-left-radius: 4px; }
+  .src { font-size: 12px; color: var(--muted); margin: -4px 0 14px 4px; }
+  .faq details {
+    border-bottom: 1px solid var(--line); padding: 16px 0;
+  }
+  .faq summary { cursor: pointer; font-weight: 600; list-style: none; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: '+'; float: right; color: var(--muted); font-weight: 400; }
+  .faq details[open] summary::after { content: '−'; }
+  .faq p { color: var(--muted); font-size: 15.5px; margin: 10px 0 0; }
+  footer { border-top: 1px solid var(--line); padding: 34px 0; color: var(--muted); font-size: 14.5px; }
+  footer a { color: var(--ink); }
+  .contact-box { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="logo" id="brand-name">—</span>
+    <div>
+      <a href="#services">Services</a>
+      <a href="#packages">Packages</a>
+      <a href="#how">How it works</a>
+      <a class="btn sm" id="nav-cta" href="#contact">Book a call</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">AI automation for local business</div>
+    <h1>Your business answers every customer — 24 hours a day.</h1>
+    <p class="lead">
+      We build AI assistants that reply to your customers, book appointments and handle
+      the paperwork, using your own prices and policies. Working demo in your first week,
+      for less than the cost of a part-time hire.
+    </p>
+    <div class="cta">
+      <a class="btn" id="hero-cta" href="#contact">Book a free 20-minute call</a>
+      <a class="btn ghost" href="#demo">See a live demo</a>
+    </div>
+    <p class="trust">No long contracts · You own everything we build · Fixed price, agreed before we start</p>
+  </div>
+</header>
+
+<section class="alt" id="problem">
+  <div class="wrap">
+    <h2>The three leaks every small business has</h2>
+    <div class="grid g3" style="margin-top: 28px">
+      <div class="card">
+        <h3>Calls and messages you miss</h3>
+        <p>Every unanswered call after 6pm is a customer who calls the next business on the list. Most small firms miss a third of them.</p>
+      </div>
+      <div class="card">
+        <h3>Leads that go cold</h3>
+        <p>A lead answered in 5 minutes is many times more likely to convert than one answered tomorrow. Yours wait until someone is free.</p>
+      </div>
+      <div class="card">
+        <h3>Hours lost to typing</h3>
+        <p>Invoices retyped, the same twenty questions answered again, reports copied between tools. Real hours, every single week.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="demo">
+  <div class="wrap">
+    <div class="eyebrow">See it working</div>
+    <h2>This is a real assistant, answering from a real price list</h2>
+    <p class="lead">It answers only from the business's own documents — and when it does not know, it says so and passes the customer to a human. No invented prices, ever.</p>
+    <div class="grid g2" style="margin-top: 28px; align-items: start">
+      <div class="demo-frame">
+        <div class="bar"><i></i><i></i><i></i></div>
+        <div class="body">
+          <div class="bubble c">How much is a teeth cleaning?</div>
+          <div class="bubble b">A scale and polish with our hygienist is $85 and takes about 30 minutes. Would you like me to check the next available slot?</div>
+          <div class="src">source: services-and-prices.md → Check-ups and hygiene</div>
+          <div class="bubble c">Do you take Delta Dental?</div>
+          <div class="bubble b">Yes — we are in-network with Delta Dental, Cigna and MetLife. Bring your card to the first visit and we will check your cover before any treatment.</div>
+          <div class="src">source: payment-and-insurance.md → Insurance we work with</div>
+        </div>
+      </div>
+      <div>
+        <h3>Watch the 3-minute demos</h3>
+        <p style="color: var(--muted)">Real automations, running end to end. No slides.</p>
+        <div class="contact-box">
+          <a class="btn ghost" id="demo1" href="#">▶ Support assistant demo</a>
+          <a class="btn ghost" id="demo2" href="#">▶ Paperwork automation demo</a>
+        </div>
+        <p style="margin-top: 22px; color: var(--muted); font-size: 15.5px">
+          Want to see it answering <em>your</em> customers' questions? Send us your website
+          and price list — we build a working demo on your own content before you pay anything.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="services">
+  <div class="wrap">
+    <div class="eyebrow">What we build</div>
+    <h2>Pick the leak you want closed first</h2>
+    <div class="grid g3" style="margin-top: 28px">
+      <div class="card">
+        <h3>Customer assistant</h3>
+        <p>Answers questions on your website and WhatsApp from your own prices and policies. Hands off to your team when it is unsure.</p>
+        <div class="price">from $500 + $100/mo</div>
+      </div>
+      <div class="card">
+        <h3>AI phone receptionist</h3>
+        <p>Picks up when you cannot: answers the usual questions, takes bookings, and texts you a summary of every call.</p>
+        <div class="price">from $1,000 + $200/mo</div>
+      </div>
+      <div class="card">
+        <h3>Instant lead follow-up</h3>
+        <p>Every new enquiry gets a personal reply and a booking link within 60 seconds, then polite follow-ups until they answer.</p>
+        <div class="price">from $500 + $100/mo</div>
+      </div>
+      <div class="card">
+        <h3>Paperwork automation</h3>
+        <p>Invoices, forms and emails read automatically and entered where they belong. Your team reviews, nobody retypes.</p>
+        <div class="price">from $750 + $150/mo</div>
+      </div>
+      <div class="card">
+        <h3>Reviews on autopilot</h3>
+        <p>Happy customers get asked for a review; every review gets a reply drafted in your voice. Angry ones reach a human first.</p>
+        <div class="price">from $400 + $100/mo</div>
+      </div>
+      <div class="card">
+        <h3>Content that keeps running</h3>
+        <p>Posts, product descriptions and newsletters drafted from what you already have, queued for one-click approval.</p>
+        <div class="price">from $500 + $150/mo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="packages">
+  <div class="wrap">
+    <div class="eyebrow">Packages</div>
+    <h2>Everything your industry needs, one price</h2>
+    <div class="grid g3" style="margin-top: 28px">
+      <div class="card pkg">
+        <h3>Clinics &amp; dental</h3>
+        <ul>
+          <li>AI phone receptionist</li>
+          <li>WhatsApp &amp; website assistant</li>
+          <li>Reminders and no-show recovery</li>
+          <li>Review requests and replies</li>
+        </ul>
+        <div class="price">$2,500 setup + $400/mo</div>
+      </div>
+      <div class="card pkg featured">
+        <span class="tag">Most popular</span>
+        <h3>Trades &amp; home services</h3>
+        <ul>
+          <li>Missed-call text-back, instantly</li>
+          <li>After-hours AI answering</li>
+          <li>Job booking and reminders</li>
+          <li>Quote follow-up that wins work</li>
+        </ul>
+        <div class="price">$1,500 setup + $300/mo</div>
+      </div>
+      <div class="card pkg">
+        <h3>Restaurants &amp; hotels</h3>
+        <ul>
+          <li>Bookings by phone and WhatsApp</li>
+          <li>Menu, hours and allergen questions</li>
+          <li>Review replies in your voice</li>
+          <li>Weekly social posts</li>
+        </ul>
+        <div class="price">$1,500 setup + $300/mo</div>
+      </div>
+      <div class="card pkg">
+        <h3>Real estate</h3>
+        <ul>
+          <li>Lead reply in 60 seconds, 24/7</li>
+          <li>Viewing bookings</li>
+          <li>Listing descriptions written for you</li>
+          <li>Weekly lead report</li>
+        </ul>
+        <div class="price">$2,000 setup + $350/mo</div>
+      </div>
+      <div class="card pkg">
+        <h3>E-commerce</h3>
+        <ul>
+          <li>Order, returns and sizing questions</li>
+          <li>Product finder that sells</li>
+          <li>Product descriptions and posts</li>
+          <li>Review automation</li>
+        </ul>
+        <div class="price">$2,000 setup + $400/mo</div>
+      </div>
+      <div class="card pkg">
+        <h3>Not on the list?</h3>
+        <p>We build for accounting firms, gyms, law firms, dealerships, schools and agencies too. Same approach, same honest pricing.</p>
+        <div class="price"><a href="#contact">Ask about your industry →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <div class="grid g2" style="margin-top: 28px">
+      <div class="steps">
+        <div class="step"><div><h3>A 20-minute call</h3><p>You show us the work that eats your week. We tell you honestly what can be automated and what cannot.</p></div></div>
+        <div class="step"><div><h3>A demo on your own content</h3><p>Before you pay anything, you see it working with your prices, your questions, your documents.</p></div></div>
+        <div class="step"><div><h3>Fixed price, agreed in writing</h3><p>Scope, price and the exact test questions it must pass. 50% to start, 50% when it passes them.</p></div></div>
+        <div class="step"><div><h3>Live in 1–3 weeks</h3><p>We test on your real data, train your team in half an hour, and hand over a one-page guide.</p></div></div>
+        <div class="step"><div><h3>We keep it running</h3><p>Monthly plan covers hosting, monitoring and fixes, plus a report showing what it handled for you.</p></div></div>
+      </div>
+      <div class="card">
+        <h3>What you always get</h3>
+        <ul style="color: var(--muted); font-size: 15.5px; padding-left: 18px; margin-top: 12px">
+          <li style="margin-bottom: 10px">It answers from <strong>your</strong> documents only — no invented prices or promises.</li>
+          <li style="margin-bottom: 10px">It hands off to a human whenever it is unsure. Every answer shows its source.</li>
+          <li style="margin-bottom: 10px">Written test questions it must pass before we call it delivered.</li>
+          <li style="margin-bottom: 10px">You own the setup. Your data is never used to train anything.</li>
+          <li>Cancel the monthly plan with 30 days notice. No lock-in.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <h2>Straight answers</h2>
+    <div class="faq" style="margin-top: 20px">
+      <details open><summary>Will it make things up?</summary><p>It answers only from the documents you give us, and it is built to say "I will pass you to a colleague" instead of guessing. Every answer records which document it came from, so you can check any conversation. For anything sensitive — medical, legal, money — it always hands off to a person.</p></details>
+      <details><summary>Is our customer data used to train AI?</summary><p>No. We use business API plans that do not train on your data, we store only what the automation needs, and we delete everything if you leave. That is written into the contract.</p></details>
+      <details><summary>What if it gets something wrong?</summary><p>Before launch it must pass a written list of real questions from your business — you approve that list. After launch, fixes are included in your monthly plan, and we watch the logs so we usually spot problems before you do.</p></details>
+      <details><summary>Do we need to change our systems?</summary><p>Almost never. It works with the calendar, inbox, CRM and website you already use. If you use paper for something, we will tell you honestly whether automating it is worth it yet.</p></details>
+      <details><summary>What does it really cost to run?</summary><p>The monthly plan covers hosting, monitoring and support. Phone minutes and heavy usage are billed at cost plus a small margin, with a monthly allowance agreed in advance — so there are no surprise bills.</p></details>
+      <details><summary>How fast can we start?</summary><p>Most builds go live in one to three weeks. A demo on your own content usually takes us a day or two.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="contact">
+  <div class="wrap" style="text-align: center">
+    <h2>See it working on your business first</h2>
+    <p class="lead" style="margin: 0 auto 26px">
+      Book a free 20-minute call. If it is not a fit, we will say so — and point you
+      at the cheaper way to fix it.
+    </p>
+    <div class="contact-box" style="justify-content: center">
+      <a class="btn" id="contact-cta" href="#">Book a free call</a>
+      <a class="btn ghost" id="contact-wa" href="#">Message on WhatsApp</a>
+      <a class="btn ghost" id="contact-mail" href="#">Send an email</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span id="footer-name">—</span> · <a id="footer-mail" href="#">—</a> · <a id="footer-phone" href="#">—</a>
+    <p style="margin: 10px 0 0; font-size: 13.5px">
+      We build with established AI providers and never train on client data. Automations assist your team — people stay responsible for decisions.
+    </p>
+  </div>
+</footer>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+//  EDIT THIS BLOCK BEFORE PUBLISHING
+// ─────────────────────────────────────────────────────────────
+const CONFIG = {
+  businessName: 'Your Business Name',
+  email: 'you@example.com',
+  phone: '+10000000000',          // digits only, used for the tel: link
+  whatsapp: '10000000000',        // digits only, no + or spaces
+  bookingLink: 'https://cal.com/your-handle/20min',
+  demoVideo1: 'https://www.loom.com/share/your-demo-1',
+  demoVideo2: 'https://www.loom.com/share/your-demo-2',
+};
+// ─────────────────────────────────────────────────────────────
+
+const set = (id, fn) => { const el = document.getElementById(id); if (el) fn(el); };
+
+set('brand-name', (el) => (el.textContent = CONFIG.businessName));
+set('footer-name', (el) => (el.textContent = CONFIG.businessName));
+for (const id of ['nav-cta', 'hero-cta', 'contact-cta']) {
+  set(id, (el) => (el.href = CONFIG.bookingLink));
+}
+set('demo1', (el) => (el.href = CONFIG.demoVideo1));
+set('demo2', (el) => (el.href = CONFIG.demoVideo2));
+set('contact-wa', (el) => (el.href = `https://wa.me/${CONFIG.whatsapp}`));
+set('contact-mail', (el) => (el.href = `mailto:${CONFIG.email}`));
+set('footer-mail', (el) => { el.href = `mailto:${CONFIG.email}`; el.textContent = CONFIG.email; });
+set('footer-phone', (el) => { el.href = `tel:${CONFIG.phone}`; el.textContent = CONFIG.phone; });
+</script>
+</body>
+</html>

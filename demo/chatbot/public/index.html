@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Northside Dental — AI Assistant Demo</title>
+<style>
+  :root {
+    --bg: #f4f6f8;
+    --panel: #ffffff;
+    --ink: #16202a;
+    --muted: #62727f;
+    --line: #e2e8ee;
+    --brand: #0f7a6c;
+    --brand-ink: #ffffff;
+    --bot-bg: #eef2f5;
+    --warn-bg: #fff6e6;
+    --warn-ink: #8a5a00;
+    --warn-line: #f0d9a8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12181d;
+      --panel: #1a2229;
+      --ink: #e8eef3;
+      --muted: #93a3b1;
+      --line: #2b3841;
+      --brand: #2aa392;
+      --bot-bg: #232d36;
+      --warn-bg: #33280f;
+      --warn-ink: #f0cd8a;
+      --warn-line: #5a4718;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 24px 16px 48px;
+  }
+  .wrap { width: 100%; max-width: 560px; }
+  header { margin-bottom: 18px; }
+  h1 { font-size: 21px; margin: 0 0 4px; }
+  .sub { color: var(--muted); font-size: 14px; margin: 0; }
+  .status {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 10px; padding: 4px 10px; border-radius: 999px;
+    background: var(--panel); border: 1px solid var(--line);
+    font-size: 12px; color: var(--muted);
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--brand); }
+  .chat {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+    overflow: hidden; display: flex; flex-direction: column; height: 60vh; min-height: 400px;
+  }
+  .log { flex: 1; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 14px; }
+  .msg { max-width: 85%; }
+  .msg.user { align-self: flex-end; }
+  .bubble { padding: 10px 14px; border-radius: 14px; white-space: pre-wrap; word-wrap: break-word; }
+  .user .bubble { background: var(--brand); color: var(--brand-ink); border-bottom-right-radius: 4px; }
+  .bot .bubble { background: var(--bot-bg); border-bottom-left-radius: 4px; }
+  .bot.escalated .bubble {
+    background: var(--warn-bg); color: var(--warn-ink); border: 1px solid var(--warn-line);
+  }
+  .meta { font-size: 11.5px; color: var(--muted); margin-top: 5px; padding-left: 4px; }
+  .meta b { font-weight: 600; }
+  form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); }
+  input {
+    flex: 1; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--bg); color: var(--ink); font-size: 15px; font-family: inherit;
+  }
+  input:focus { outline: 2px solid var(--brand); outline-offset: -1px; }
+  button {
+    padding: 11px 18px; border: 0; border-radius: 10px; background: var(--brand);
+    color: var(--brand-ink); font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit;
+  }
+  button:disabled { opacity: .55; cursor: default; }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+  .chip {
+    padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--panel); color: var(--muted); font-size: 13px; cursor: pointer;
+    font-family: inherit;
+  }
+  .chip:hover { color: var(--ink); border-color: var(--brand); }
+  .note { margin-top: 18px; font-size: 12.5px; color: var(--muted); }
+  .typing span {
+    display: inline-block; width: 6px; height: 6px; margin-right: 3px; border-radius: 50%;
+    background: var(--muted); animation: blink 1.2s infinite;
+  }
+  .typing span:nth-child(2) { animation-delay: .2s; }
+  .typing span:nth-child(3) { animation-delay: .4s; }
+  @keyframes blink { 0%, 60%, 100% { opacity: .25; } 30% { opacity: 1; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Northside Dental — customer assistant</h1>
+    <p class="sub">Answers only from the clinic's own documents. Hands off to a human when it is not sure.</p>
+    <div class="status"><span class="dot"></span><span id="status">connecting…</span></div>
+  </header>
+
+  <div class="chat">
+    <div class="log" id="log">
+      <div class="msg bot">
+        <div class="bubble">Hello! I can help with opening hours, prices, appointments, insurance and payment. What would you like to know?</div>
+      </div>
+    </div>
+    <form id="form">
+      <input id="input" autocomplete="off" placeholder="Ask about prices, hours, booking…" aria-label="Your message">
+      <button id="send" type="submit">Send</button>
+    </form>
+  </div>
+
+  <div class="chips" id="chips"></div>
+  <p class="note">Demo data is fictional. Every reply shows the source document it came from — that traceability is what makes a client trust the bot.</p>
+</div>
+
+<script>
+const SUGGESTIONS = [
+  'What are your opening hours?',
+  'How much is a teeth cleaning?',
+  'Do you accept Delta Dental?',
+  'What if I cancel late?',
+  'What is the capital of France?',
+];
+
+const log = document.getElementById('log');
+const form = document.getElementById('form');
+const input = document.getElementById('input');
+const send = document.getElementById('send');
+const chips = document.getElementById('chips');
+const history = [];
+
+for (const text of SUGGESTIONS) {
+  const chip = document.createElement('button');
+  chip.className = 'chip';
+  chip.type = 'button';
+  chip.textContent = text;
+  chip.onclick = () => { input.value = text; form.requestSubmit(); };
+  chips.appendChild(chip);
+}
+
+fetch('/api/health').then((r) => r.json()).then((h) => {
+  document.getElementById('status').textContent =
+    `${h.chunks} knowledge sections · ${h.mode === 'live' ? h.model : 'mock mode (no API key)'}`;
+}).catch(() => { document.getElementById('status').textContent = 'offline'; });
+
+function addMessage(role, text, { escalated = false, meta = '' } = {}) {
+  const wrap = document.createElement('div');
+  wrap.className = `msg ${role}${escalated ? ' escalated' : ''}`;
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  bubble.textContent = text;
+  wrap.appendChild(bubble);
+  if (meta) {
+    const line = document.createElement('div');
+    line.className = 'meta';
+    line.innerHTML = meta;
+    wrap.appendChild(line);
+  }
+  log.appendChild(wrap);
+  log.scrollTop = log.scrollHeight;
+  return wrap;
+}
+
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const message = input.value.trim();
+  if (!message) return;
+
+  addMessage('user', message);
+  history.push({ role: 'user', content: message });
+  input.value = '';
+  send.disabled = true;
+
+  const pending = addMessage('bot', '');
+  pending.querySelector('.bubble').innerHTML =
+    '<span class="typing"><span></span><span></span><span></span></span>';
+
+  try {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ message, history: history.slice(-6) }),
+    });
+    const data = await response.json();
+    pending.remove();
+
+    const sources = (data.sources || [])
+      .slice(0, 2)
+      .map((s) => `${s.source} → ${s.title}`)
+      .join(' · ');
+    const meta = data.escalate
+      ? `<b>handed off to a human</b> · confidence ${data.confidence.toFixed(2)}`
+      : `${sources ? 'source: ' + sources + ' · ' : ''}confidence ${data.confidence.toFixed(2)}`;
+
+    addMessage('bot', data.answer, { escalated: data.escalate, meta });
+    history.push({ role: 'assistant', content: data.answer });
+  } catch {
+    pending.remove();
+    addMessage('bot', 'Sorry, something went wrong reaching the assistant.', { escalated: true });
+  } finally {
+    send.disabled = false;
+    input.focus();
+  }
+});
+
+input.focus();
+</script>
+</body>
+</html>

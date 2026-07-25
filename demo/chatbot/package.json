@@ -1,0 +1,16 @@
+{
+  "name": "ai-services-chatbot-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Service A1 reference build: RAG support chatbot with confidence gating and an acceptance test suite. Zero dependencies.",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "ingest": "node src/ingest.js",
+    "test": "node src/eval.js",
+    "ask": "node src/ask.js"
+  }
+}
